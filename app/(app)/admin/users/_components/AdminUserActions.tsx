@@ -128,6 +128,24 @@ export function AdminUserActions({
                 </TerminalButton>
             )}
 
+            {type === 'BANNED' && (
+                <TerminalButton
+                    variant="secondary"
+                    className="w-auto! px-3 py-1"
+                    onClick={() =>
+                        onAction(
+                            actions.unbanUser,
+                            user.id,
+                            'Mitglied entsperren',
+                            `Möchtest du den User ${user.sc_handle} wirklich entsperren? Rolle und Gruppenzuweisungen bleiben erhalten.`,
+                            'primary'
+                        )
+                    }
+                >
+                    Entsperren
+                </TerminalButton>
+            )}
+
             {type !== 'ACTIVE' && (
                 <TerminalButton
                     variant="secondary"

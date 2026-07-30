@@ -5,7 +5,14 @@ import { toast } from 'sonner';
 
 import { Role } from '@/lib/generated/browser';
 
-import { activateUser, banUser, deleteUser, resetUserAttempts, updateUserRole } from './actions';
+import {
+    activateUser,
+    banUser,
+    deleteUser,
+    resetUserAttempts,
+    unbanUser,
+    updateUserRole,
+} from './actions';
 import type { AdminAction } from './adminActionTypes';
 
 type ModalVariant = 'primary' | 'danger';
@@ -82,6 +89,7 @@ export function useAdminUserActions() {
             promoteUser,
             demoteUser,
             banUser,
+            unbanUser,
             resetUserAttempts,
             deleteUser,
         },
