@@ -903,24 +903,24 @@ async function requireModuleAccess(moduleId: string): Promise<AuthenticatedSessi
 
 ## Migrationstests
 
-- [ ] Migration in einer leeren Datenbank ausführen
-- [ ] Migration mit bestehenden Benutzern ausführen
-- [ ] Migration mit bestehenden Modulkonfigurationen ausführen
-- [ ] bestehende Benutzeranmeldung nach Migration prüfen
-- [ ] bestehende Rollen nach Migration prüfen
-- [ ] bestehende Modulkonfigurationen nach Migration prüfen
-- [ ] Rollback über Datenbankbackup praktisch berücksichtigen
+- [x] Migration in einer leeren Datenbank ausführen
+- [x] Migration mit bestehenden Benutzern ausführen
+- [x] Migration mit bestehenden Modulkonfigurationen ausführen
+- [x] bestehende Benutzeranmeldung nach Migration prüfen
+- [x] bestehende Rollen nach Migration prüfen
+- [x] bestehende Modulkonfigurationen nach Migration prüfen
+- [x] Rollback über Datenbankbackup praktisch berücksichtigen
 
 ## Technische Prüfung
 
-- [ ] `make format` ausführen
-- [ ] `make lint` ausführen
-- [ ] `npm run build` ausführen
-- [ ] `git diff --check` ausführen
-- [ ] `git status --short` prüfen
-- [ ] Prisma-Schema validieren
-- [ ] Prisma-Client erfolgreich generieren
-- [ ] Migration erfolgreich deployen
+- [x] `make format` ausführen
+- [x] `make lint` ausführen
+- [x] `npm run build` ausführen
+- [x] `git diff --check` ausführen
+- [x] `git status --short` prüfen
+- [x] Prisma-Schema validieren
+- [x] Prisma-Client erfolgreich generieren
+- [x] Migration erfolgreich deployen
 
 ## Akzeptanzkriterien
 
@@ -982,28 +982,28 @@ Nach PR #18 können unter anderem folgende Erweiterungen separat umgesetzt werde
 
 # Definition of Done
 
-- [ ] fachliches Gruppenmodell ist verbindlich dokumentiert
-- [ ] globale Zugriffsgruppen sind implementiert
-- [ ] Prisma-Modelle und Migration sind vorhanden
-- [ ] technischer Gruppenschlüssel ist eindeutig und unveränderlich
-- [ ] Gruppen können erstellt und bearbeitet werden
-- [ ] Gruppen können archiviert und wiederhergestellt werden
-- [ ] verwendete Gruppen können nicht gelöscht werden
-- [ ] Benutzer können aktiven Gruppen zugeordnet werden
-- [ ] Module können aktiven Gruppen zugeordnet werden
-- [ ] archivierte Gruppen behalten ihre Zuordnungen
-- [ ] archivierte Gruppen gewähren keinen Zugriff
-- [ ] Rollen- und Gruppenzugriff werden additiv ausgewertet
-- [ ] Dashboard verwendet die benutzerbezogene Modulauswertung
-- [ ] serverseitiger Modulzugriffsschutz ist vorhanden
-- [ ] administrative Kernmodule bleiben geschützt
-- [ ] Gruppenverwaltung ist ausschließlich für Administratoren erreichbar
-- [ ] Mitgliederverwaltung zeigt Gruppenzuordnungen
-- [ ] Modulverwaltung zeigt Gruppenfreigaben
-- [ ] Desktop- und Mobilansicht sind geprüft
-- [ ] Migration mit leerer Datenbank ist geprüft
-- [ ] Migration mit bestehenden Daten ist geprüft
-- [ ] manuelle Funktionstests sind erfolgreich
-- [ ] Linting ist erfolgreich
-- [ ] Production-Build ist erfolgreich
+- [x] fachliches Gruppenmodell ist verbindlich dokumentiert
+- [x] globale Zugriffsgruppen sind implementiert
+- [x] Prisma-Modelle und Migration sind vorhanden
+- [x] technischer Gruppenschlüssel ist eindeutig und unveränderlich
+- [x] Gruppen können erstellt und bearbeitet werden
+- [x] Gruppen können archiviert und wiederhergestellt werden
+- [x] verwendete Gruppen können nicht gelöscht werden
+- [x] Benutzer können aktiven Gruppen zugeordnet werden
+- [x] Module können aktiven Gruppen zugeordnet werden
+- [x] archivierte Gruppen behalten ihre Zuordnungen
+- [x] archivierte Gruppen gewähren keinen Zugriff
+- [x] Rollen- und Gruppenzugriff werden additiv ausgewertet
+- [x] Dashboard verwendet die benutzerbezogene Modulauswertung
+- [x] serverseitiger Modulzugriffsschutz ist vorhanden
+- [x] administrative Kernmodule bleiben geschützt
+- [x] Gruppenverwaltung ist ausschließlich für Administratoren erreichbar
+- [x] Mitgliederverwaltung zeigt Gruppenzuordnungen
+- [x] Modulverwaltung zeigt Gruppenfreigaben
+- [x] Desktop- und Mobilansicht sind geprüft
+- [x] Migration mit leerer Datenbank ist geprüft
+- [x] Migration mit bestehenden Daten ist geprüft
+- [x] manuelle Funktionstests sind erfolgreich
+- [x] Linting ist erfolgreich
+- [x] Production-Build ist erfolgreich
 - [ ] PR ist konfliktfrei und merge-bereit
