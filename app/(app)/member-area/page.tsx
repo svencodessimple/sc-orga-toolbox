@@ -1,19 +1,7 @@
-import { redirect } from 'next/navigation';
-
-import { requireActiveSession } from '@/lib/auth/require-session';
-import { getVisibleModulesForUser } from '@/lib/modules/moduleConfigurationService';
+import { requireModuleAccess } from '@/lib/auth/require-module-access';
 
 export default async function MemberAreaPage() {
-    const session = await requireActiveSession();
-
-    const visibleModules = await getVisibleModulesForUser({
-        userId: session.user.id,
-        role: session.user.role,
-    });
-
-    if (!visibleModules.some((module) => module.id === 'member-area')) {
-        redirect('/dashboard');
-    }
+    const session = await requireModuleAccess('member-area');
 
     return (
         <div className="mx-auto max-w-7xl space-y-8">

@@ -8,6 +8,7 @@ import {
 } from '@/lib/access-groups/accessGroupService';
 
 import {
+    getModuleDefinition,
     moduleDefinitions,
     type ModuleCategory,
     type ModuleConfigurationPolicy,
@@ -55,6 +56,10 @@ export interface ModuleManagementConfiguration extends EffectiveModuleConfigurat
 export interface ModuleAccessSubject {
     userId: string;
     role: Role;
+}
+
+export interface ModuleAccessRequest extends ModuleAccessSubject {
+    moduleId: string;
 }
 
 function mergeRoles(...roleGroups: readonly (readonly Role[])[]): Role[] {
@@ -178,6 +183,29 @@ export async function getVisibleModulesForUser({
     return modules.filter((module) => hasModuleAccess(module, role, activeUserGroupIdSet));
 }
 
+export async function canUserAccessModule({
+    moduleId,
+    userId,
+    role,
+}: ModuleAccessRequest): Promise<boolean> {
+    if (!getModuleDefinition(moduleId)) {
+        return false;
+    }
+
+    const [modules, activeUserGroupIds] = await Promise.all([
+        getEffectiveModuleConfigurations(),
+        getActiveGroupIdsForUser(userId),
+    ]);
+
+    const targetModule = modules.find((candidate) => candidate.id === moduleId);
+
+    if (!targetModule) {
+        return false;
+    }
+
+    return hasModuleAccess(targetModule, role, new Set(activeUserGroupIds));
+}
+
 export async function getModuleManagementConfigurations(): Promise<
     ModuleManagementConfiguration[]
 > {
@@ -251,17 +279,17 @@ export async function getModuleManagementConfigurations(): Promise<
 }
 
 export function hasModuleAccess(
-    module: EffectiveModuleConfiguration,
+    targetModule: EffectiveModuleConfiguration,
     userRole: Role,
     activeUserGroupIds: ReadonlySet<string>
 ): boolean {
-    if (!module.enabled) {
+    if (!targetModule.enabled) {
         return false;
     }
 
-    if (module.allowedRoles.includes(userRole)) {
+    if (targetModule.allowedRoles.includes(userRole)) {
         return true;
     }
 
-    return module.allowedGroupIds.some((groupId) => activeUserGroupIds.has(groupId));
+    return targetModule.allowedGroupIds.some((groupId) => activeUserGroupIds.has(groupId));
 }

@@ -782,15 +782,15 @@ Die Daten werden anschließend im Speicher zusammengeführt.
 
 ## Aufgaben
 
-- [ ] zentrale Zugriffsauswertung für einzelne Module bereitstellen
-- [ ] Helper `requireModuleAccess` vorbereiten
-- [ ] Modul-ID gegen den technischen Katalog validieren
-- [ ] angemeldeten Benutzer serverseitig ermitteln
-- [ ] Rollen- und Gruppenzugriff serverseitig prüfen
-- [ ] nicht autorisierte Zugriffe kontrolliert behandeln
-- [ ] bestehendes Admin-Layout für `/admin/*` beibehalten
-- [ ] Dashboard-Sichtbarkeit nicht als Zugriffsschutz verwenden
-- [ ] administrative Kernmodule gegen Gruppenmanipulation absichern
+- [x] zentrale Zugriffsauswertung für einzelne Module bereitstellen
+- [x] Helper `requireModuleAccess` vorbereiten
+- [x] Modul-ID gegen den technischen Katalog validieren
+- [x] angemeldeten Benutzer serverseitig ermitteln
+- [x] Rollen- und Gruppenzugriff serverseitig prüfen
+- [x] nicht autorisierte Zugriffe kontrolliert behandeln
+- [x] bestehendes Admin-Layout für `/admin/*` beibehalten
+- [x] Dashboard-Sichtbarkeit nicht als Zugriffsschutz verwenden
+- [x] administrative Kernmodule gegen Gruppenmanipulation absichern
 - [ ] mindestens einen direkten Routenzugriff manuell prüfen
 
 ## Vorgesehene API
