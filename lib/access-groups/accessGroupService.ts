@@ -1,6 +1,7 @@
 import 'server-only';
 
 import { prisma } from '@/lib/prisma';
+import { moduleDefinitions } from '@/lib/modules/moduleCatalog';
 
 import type { AccessGroupOption, AccessGroupViewModel } from './accessGroupTypes';
 
@@ -12,6 +13,9 @@ interface AccessGroupWithCounts {
     archivedAt: Date | null;
     createdAt: Date;
     updatedAt: Date;
+    modules: {
+        moduleId: string;
+    }[];
     _count: {
         members: number;
         modules: number;
@@ -19,6 +23,10 @@ interface AccessGroupWithCounts {
 }
 
 function toAccessGroupViewModel(group: AccessGroupWithCounts): AccessGroupViewModel {
+    const moduleCount = group.modules.filter(({ moduleId }) =>
+        groupConfigurableModuleIds.has(moduleId)
+    ).length;
+
     return {
         id: group.id,
         key: group.key,
@@ -28,7 +36,8 @@ function toAccessGroupViewModel(group: AccessGroupWithCounts): AccessGroupViewMo
         createdAt: group.createdAt,
         updatedAt: group.updatedAt,
         memberCount: group._count.members,
-        moduleCount: group._count.modules,
+        moduleCount,
+        invalidModuleAssignmentCount: group._count.modules - moduleCount,
     };
 }
 
@@ -44,6 +53,11 @@ export async function getAccessGroups(
                   archivedAt: null,
               },
         include: {
+            modules: {
+                select: {
+                    moduleId: true,
+                },
+            },
             _count: {
                 select: {
                     members: true,
@@ -65,6 +79,11 @@ export async function getAccessGroupById(groupId: string): Promise<AccessGroupVi
             id: groupId,
         },
         include: {
+            modules: {
+                select: {
+                    moduleId: true,
+                },
+            },
             _count: {
                 select: {
                     members: true,
@@ -133,3 +152,9 @@ export async function getActiveGroupIdsByModule(): Promise<Map<string, string[]>
 
     return groupIdsByModule;
 }
+
+const groupConfigurableModuleIds = new Set(
+    moduleDefinitions
+        .filter((definition) => definition.configuration.allowedGroups)
+        .map((definition) => definition.id)
+);

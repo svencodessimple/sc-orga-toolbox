@@ -8,6 +8,7 @@ export interface AccessGroupViewModel {
     updatedAt: Date;
     memberCount: number;
     moduleCount: number;
+    invalidModuleAssignmentCount: number;
 }
 
 export interface AccessGroupOption {

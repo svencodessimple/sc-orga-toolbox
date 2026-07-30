@@ -71,7 +71,8 @@ export function AccessGroupCard({ group }: AccessGroupCardProps) {
     const [confirmationAction, setConfirmationAction] = useState<ConfirmationAction | null>(null);
 
     const isArchived = group.archivedAt !== null;
-    const isInUse = group.memberCount > 0 || group.moduleCount > 0;
+    const isInUse =
+        group.memberCount > 0 || group.moduleCount > 0 || group.invalidModuleAssignmentCount > 0;
 
     const confirmationConfig = confirmationAction
         ? getConfirmationConfig(confirmationAction, group.name)
@@ -144,6 +145,7 @@ export function AccessGroupCard({ group }: AccessGroupCardProps) {
                         <AccessGroupAssignmentSummary
                             memberCount={group.memberCount}
                             moduleCount={group.moduleCount}
+                            invalidModuleAssignmentCount={group.invalidModuleAssignmentCount}
                         />
 
                         <AccessGroupCardActions
