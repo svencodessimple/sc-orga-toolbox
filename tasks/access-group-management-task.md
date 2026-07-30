@@ -1006,4 +1006,4 @@ Nach PR #18 können unter anderem folgende Erweiterungen separat umgesetzt werde
 - [x] manuelle Funktionstests sind erfolgreich
 - [x] Linting ist erfolgreich
 - [x] Production-Build ist erfolgreich
-- [ ] PR ist konfliktfrei und merge-bereit
+- [x] PR ist konfliktfrei und merge-bereit
