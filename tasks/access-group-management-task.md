@@ -791,7 +791,7 @@ Die Daten werden anschließend im Speicher zusammengeführt.
 - [x] bestehendes Admin-Layout für `/admin/*` beibehalten
 - [x] Dashboard-Sichtbarkeit nicht als Zugriffsschutz verwenden
 - [x] administrative Kernmodule gegen Gruppenmanipulation absichern
-- [ ] mindestens einen direkten Routenzugriff manuell prüfen
+- [x] mindestens einen direkten Routenzugriff manuell prüfen
 
 ## Vorgesehene API
 
