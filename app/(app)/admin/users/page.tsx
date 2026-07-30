@@ -1,3 +1,4 @@
+import { getActiveAccessGroups } from '@/lib/access-groups/accessGroupService';
 import { requireAdminSession } from '@/lib/auth/require-session';
 
 import { AdminConsole } from './_components/AdminConsole';
@@ -13,7 +14,18 @@ export default async function AdminUsersPage({ searchParams }: AdminUsersPagePro
 
     const { tab } = await searchParams;
     const activeTab = parseAdminTab(tab);
-    const data = await getAdminDashboardData();
 
-    return <AdminConsole data={data} activeTab={activeTab} currentUserId={session.user.id} />;
+    const [data, availableGroups] = await Promise.all([
+        getAdminDashboardData(),
+        getActiveAccessGroups(),
+    ]);
+
+    return (
+        <AdminConsole
+            data={data}
+            activeTab={activeTab}
+            currentUserId={session.user.id}
+            availableGroups={availableGroups}
+        />
+    );
 }

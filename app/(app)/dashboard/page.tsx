@@ -1,11 +1,14 @@
 import { requireActiveSession } from '@/lib/auth/require-session';
-import { getVisibleModulesForRole } from '@/lib/modules/moduleConfigurationService';
+import { getVisibleModulesForUser } from '@/lib/modules/moduleConfigurationService';
 
 import { ModuleSection } from './_components/ModuleSection';
 
 export default async function DashboardPage() {
     const session = await requireActiveSession();
-    const visibleModules = await getVisibleModulesForRole(session.user.role);
+    const visibleModules = await getVisibleModulesForUser({
+        userId: session.user.id,
+        role: session.user.role,
+    });
 
     const modules = visibleModules.filter((module) => module.category === 'module');
     const administrationModules = visibleModules.filter(

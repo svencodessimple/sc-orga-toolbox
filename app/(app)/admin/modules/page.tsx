@@ -1,12 +1,16 @@
+import { getActiveAccessGroups } from '@/lib/access-groups/accessGroupService';
 import { requireAdminSession } from '@/lib/auth/require-session';
-import { getEffectiveModuleConfigurations } from '@/lib/modules/moduleConfigurationService';
+import { getModuleManagementConfigurations } from '@/lib/modules/moduleConfigurationService';
 
 import { ModuleConfigurationCard } from './_components/ModuleConfigurationCard';
 
 export default async function ModuleManagementPage() {
     await requireAdminSession();
 
-    const modules = await getEffectiveModuleConfigurations();
+    const [modules, availableGroups] = await Promise.all([
+        getModuleManagementConfigurations(),
+        getActiveAccessGroups(),
+    ]);
 
     return (
         <div className="mx-auto max-w-7xl space-y-8">
@@ -28,7 +32,11 @@ export default async function ModuleManagementPage() {
 
             <div className="space-y-6">
                 {modules.map((module) => (
-                    <ModuleConfigurationCard key={module.id} module={module} />
+                    <ModuleConfigurationCard
+                        key={module.id}
+                        module={module}
+                        availableGroups={availableGroups}
+                    />
                 ))}
             </div>
         </div>

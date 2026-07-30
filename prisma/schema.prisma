@@ -26,15 +26,17 @@ enum Role {
 model User {
   id                 String     @id @default(uuid())
   sc_handle          String     @unique
-  password           String // Gehashtes Passwort
+  password           String
   status             UserStatus @default(PENDING)
   role               Role       @default(GUEST)
-  verification_token String     @unique // Wird im Code als "SC-XXXXXX" generiert
+  verification_token String     @unique
   failed_attempts    Int        @default(0)
   createdAt          DateTime   @default(now())
   updatedAt          DateTime   @updatedAt
-  rejectedAt         DateTime? // Wird gesetzt, wenn failed_attempts > 18
-  bannedAt           DateTime? // Wird gesetzt, wenn der Admin den User bannt
+  rejectedAt         DateTime?
+  bannedAt           DateTime?
+
+  accessGroups UserAccessGroup[]
 
   @@map("users")
 }
@@ -61,4 +63,44 @@ model ModuleAllowedRole {
 
   @@id([moduleId, role])
   @@map("module_allowed_roles")
+}
+
+model AccessGroup {
+  id          String    @id @default(uuid())
+  key         String    @unique @map("group_key") @db.VarChar(64)
+  name        String    @db.VarChar(80)
+  description String?   @db.Text
+  archivedAt  DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  members UserAccessGroup[]
+  modules ModuleAccessGroup[]
+
+  @@map("access_groups")
+}
+
+model UserAccessGroup {
+  userId     String
+  groupId    String
+  assignedAt DateTime @default(now())
+
+  user  User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  group AccessGroup @relation(fields: [groupId], references: [id], onDelete: Restrict)
+
+  @@id([userId, groupId])
+  @@index([groupId])
+  @@map("user_access_groups")
+}
+
+model ModuleAccessGroup {
+  moduleId   String
+  groupId    String
+  assignedAt DateTime @default(now())
+
+  group AccessGroup @relation(fields: [groupId], references: [id], onDelete: Restrict)
+
+  @@id([moduleId, groupId])
+  @@index([groupId])
+  @@map("module_access_groups")
 }

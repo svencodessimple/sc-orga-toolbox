@@ -1,9 +1,12 @@
 import type { UserStatus } from '@/lib/generated/client';
+import type { AccessGroupOption } from '@/lib/access-groups/accessGroupTypes';
 
 import type { AdminUser } from '../adminTypes';
 import type { useAdminUserActions } from '../useAdminUserActions';
 import { AdminUserActions } from './AdminUserActions';
 import { FormatDate } from './FormatDate';
+import { UserAccessGroupBadges } from './UserAccessGroupBadges';
+import { UserAccessGroupEditor } from './UserAccessGroupEditor';
 
 interface AdminUserTableProps {
     users: AdminUser[];
@@ -11,6 +14,7 @@ interface AdminUserTableProps {
     currentUserId: string;
     onAction: ReturnType<typeof useAdminUserActions>['openModal'];
     actions: ReturnType<typeof useAdminUserActions>['actions'];
+    availableGroups: readonly AccessGroupOption[];
 }
 
 export function AdminUserTable({
@@ -19,6 +23,7 @@ export function AdminUserTable({
     currentUserId,
     onAction,
     actions,
+    availableGroups,
 }: AdminUserTableProps) {
     return (
         <div className="overflow-x-auto bg-panel border border-line rounded">
@@ -27,6 +32,7 @@ export function AdminUserTable({
                     <tr className="border-b border-line bg-panel-alt text-text-dim">
                         <th className="p-4">RSI Handle</th>
                         <th className="p-4">Rolle</th>
+                        <th className="p-4">Zugriffsgruppen</th>
                         <th className="p-4">Registriert am</th>
                         {type === 'REJECTED' && (
                             <th className="p-4">Fehlversuche / Abgelehnt am</th>
@@ -48,6 +54,19 @@ export function AdminUserTable({
                                 <span className="px-2 py-0.5 text-xs rounded bg-panel-alt border border-line text-text-dim">
                                     {user.role}
                                 </span>
+                            </td>
+                            <td className="min-w-64 p-4">
+                                <UserAccessGroupBadges groups={user.accessGroups} />
+
+                                <div className="mt-2">
+                                    <UserAccessGroupEditor
+                                        userId={user.id}
+                                        userHandle={user.sc_handle}
+                                        userStatus={user.status}
+                                        assignedGroups={user.accessGroups}
+                                        availableGroups={availableGroups}
+                                    />
+                                </div>
                             </td>
                             <td className="p-4 text-text-dim">
                                 <FormatDate date={user.createdAt} withTime />

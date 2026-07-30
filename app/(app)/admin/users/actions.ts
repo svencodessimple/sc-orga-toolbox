@@ -7,6 +7,7 @@ import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { env } from '@/lib/env';
 import { Role, UserStatus } from '@/lib/generated/browser';
 import { prisma } from '@/lib/prisma';
+import { updateUserAccessGroupsSchema } from '@/lib/access-groups/userAccessGroupSchemas';
 
 import type { AdminActionResult } from './adminActionTypes';
 
@@ -65,15 +66,34 @@ export async function getAdminDashboardData() {
             updatedAt: true,
             rejectedAt: true,
             bannedAt: true,
+            accessGroups: {
+                select: {
+                    group: {
+                        select: {
+                            id: true,
+                            key: true,
+                            name: true,
+                            archivedAt: true,
+                        },
+                    },
+                },
+            },
         },
     });
 
+    const users = allUsers.map(({ accessGroups, ...user }) => ({
+        ...user,
+        accessGroups: accessGroups
+            .map(({ group }) => group)
+            .sort((left, right) => left.name.localeCompare(right.name, 'de')),
+    }));
+
     return {
-        [UserStatus.PENDING]: allUsers.filter((u) => u.status === UserStatus.PENDING),
-        [UserStatus.VERIFIED]: allUsers.filter((u) => u.status === UserStatus.VERIFIED),
-        [UserStatus.ACTIVE]: allUsers.filter((u) => u.status === UserStatus.ACTIVE),
-        [UserStatus.REJECTED]: allUsers.filter((u) => u.status === UserStatus.REJECTED),
-        [UserStatus.BANNED]: allUsers.filter((u) => u.status === UserStatus.BANNED),
+        [UserStatus.PENDING]: users.filter((user) => user.status === UserStatus.PENDING),
+        [UserStatus.VERIFIED]: users.filter((user) => user.status === UserStatus.VERIFIED),
+        [UserStatus.ACTIVE]: users.filter((user) => user.status === UserStatus.ACTIVE),
+        [UserStatus.REJECTED]: users.filter((user) => user.status === UserStatus.REJECTED),
+        [UserStatus.BANNED]: users.filter((user) => user.status === UserStatus.BANNED),
     };
 }
 
@@ -283,4 +303,168 @@ export async function triggerCronVerification() {
     const result = await response.json();
     revalidatePath('/admin/users');
     return result;
+}
+
+/**
+ * 7. Aktualisiert die Gruppenzuweisungen eines Users
+ * Erlaubter Ausgangsstatus: nur ACTIVE
+ */
+export async function updateUserAccessGroups(input: unknown): Promise<AdminActionResult> {
+    await assertAdmin();
+
+    const validationResult = updateUserAccessGroupsSchema.safeParse(input);
+
+    if (!validationResult.success) {
+        return {
+            success: false,
+            message:
+                validationResult.error.issues[0]?.message ?? 'Die Gruppenzuweisung ist ungültig.',
+        };
+    }
+
+    const { userId, activeGroupIds } = validationResult.data;
+
+    try {
+        const outcome = await prisma.$transaction(async (transaction) => {
+            const user = await transaction.user.findUnique({
+                where: {
+                    id: userId,
+                },
+                select: {
+                    status: true,
+                },
+            });
+
+            if (!user) {
+                return {
+                    status: 'user-not-found' as const,
+                };
+            }
+
+            const requestedGroups = await transaction.accessGroup.findMany({
+                where: {
+                    id: {
+                        in: activeGroupIds,
+                    },
+                },
+                select: {
+                    id: true,
+                    archivedAt: true,
+                },
+            });
+
+            if (requestedGroups.length !== activeGroupIds.length) {
+                return {
+                    status: 'unknown-group' as const,
+                };
+            }
+
+            if (requestedGroups.some((group) => group.archivedAt !== null)) {
+                return {
+                    status: 'archived-group' as const,
+                };
+            }
+
+            const existingActiveAssignments = await transaction.userAccessGroup.findMany({
+                where: {
+                    userId,
+                    group: {
+                        archivedAt: null,
+                    },
+                },
+                select: {
+                    groupId: true,
+                },
+            });
+
+            const existingGroupIds = new Set(
+                existingActiveAssignments.map(({ groupId }) => groupId)
+            );
+            const requestedGroupIds = new Set(activeGroupIds);
+
+            const groupIdsToRemove = [...existingGroupIds].filter(
+                (groupId) => !requestedGroupIds.has(groupId)
+            );
+            const groupIdsToAdd = activeGroupIds.filter(
+                (groupId) => !existingGroupIds.has(groupId)
+            );
+
+            if (user.status !== UserStatus.ACTIVE && groupIdsToAdd.length > 0) {
+                return {
+                    status: 'inactive-user-addition' as const,
+                    userStatus: user.status,
+                };
+            }
+
+            if (groupIdsToRemove.length > 0) {
+                await transaction.userAccessGroup.deleteMany({
+                    where: {
+                        userId,
+                        groupId: {
+                            in: groupIdsToRemove,
+                        },
+                    },
+                });
+            }
+
+            if (groupIdsToAdd.length > 0) {
+                await transaction.userAccessGroup.createMany({
+                    data: groupIdsToAdd.map((groupId) => ({
+                        userId,
+                        groupId,
+                    })),
+                });
+            }
+
+            return {
+                status: 'updated' as const,
+            };
+        });
+
+        if (outcome.status === 'user-not-found') {
+            return {
+                success: false,
+                message: 'Der angegebene Benutzer wurde nicht gefunden.',
+            };
+        }
+
+        if (outcome.status === 'inactive-user-addition') {
+            return {
+                success: false,
+                message:
+                    'Inaktiven Benutzern können keine neuen Gruppen zugewiesen werden. ' +
+                    'Bestehende Zuweisungen dürfen nur entfernt werden.',
+            };
+        }
+
+        if (outcome.status === 'unknown-group') {
+            return {
+                success: false,
+                message: 'Mindestens eine Zugriffsgruppe ist nicht bekannt.',
+            };
+        }
+
+        if (outcome.status === 'archived-group') {
+            return {
+                success: false,
+                message: 'Archivierte Zugriffsgruppen können nicht neu zugewiesen werden.',
+            };
+        }
+
+        revalidatePath('/admin/users');
+        revalidatePath('/admin/groups');
+        revalidatePath('/dashboard');
+        revalidatePath('/member-area');
+
+        return {
+            success: true,
+        };
+    } catch (error) {
+        console.error('Benutzer-Gruppenzuordnungen konnten nicht gespeichert werden.', error);
+
+        return {
+            success: false,
+            message: 'Die Benutzer-Gruppenzuordnungen konnten nicht gespeichert werden.',
+        };
+    }
 }

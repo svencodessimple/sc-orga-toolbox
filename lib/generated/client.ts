@@ -59,3 +59,18 @@ export type ModuleConfiguration = Prisma.ModuleConfigurationModel;
  *
  */
 export type ModuleAllowedRole = Prisma.ModuleAllowedRoleModel;
+/**
+ * Model AccessGroup
+ *
+ */
+export type AccessGroup = Prisma.AccessGroupModel;
+/**
+ * Model UserAccessGroup
+ *
+ */
+export type UserAccessGroup = Prisma.UserAccessGroupModel;
+/**
+ * Model ModuleAccessGroup
+ *
+ */
+export type ModuleAccessGroup = Prisma.ModuleAccessGroupModel;

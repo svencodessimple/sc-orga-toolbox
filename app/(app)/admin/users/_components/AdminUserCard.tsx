@@ -1,6 +1,9 @@
 import { TerminalPanel } from '@/components/mobiglas/TerminalPanel';
 import type { UserStatus } from '@/lib/generated/client';
+import type { AccessGroupOption } from '@/lib/access-groups/accessGroupTypes';
 
+import { UserAccessGroupBadges } from './UserAccessGroupBadges';
+import { UserAccessGroupEditor } from './UserAccessGroupEditor';
 import type { AdminUser } from '../adminTypes';
 import type { useAdminUserActions } from '../useAdminUserActions';
 import { AdminUserActions } from './AdminUserActions';
@@ -12,6 +15,7 @@ interface AdminUserCardProps {
     currentUserId: string;
     onAction: ReturnType<typeof useAdminUserActions>['openModal'];
     actions: ReturnType<typeof useAdminUserActions>['actions'];
+    availableGroups: readonly AccessGroupOption[];
 }
 
 export function AdminUserCard({
@@ -20,6 +24,7 @@ export function AdminUserCard({
     currentUserId,
     onAction,
     actions,
+    availableGroups,
 }: AdminUserCardProps) {
     return (
         <TerminalPanel showCorners={false} className="max-w-none">
@@ -53,6 +58,25 @@ export function AdminUserCard({
                     Gesperrt: <FormatDate date={user.bannedAt} withTime />
                 </p>
             )}
+
+            <div className="mt-4 border-t border-line pt-3">
+                <p className="mb-2 font-mono text-[10px] uppercase tracking-[0.08em] text-text-dim">
+                    Zugriffsgruppen
+                </p>
+
+                <UserAccessGroupBadges groups={user.accessGroups} />
+
+                <div className="mt-3">
+                    <UserAccessGroupEditor
+                        userId={user.id}
+                        userHandle={user.sc_handle}
+                        userStatus={user.status}
+                        assignedGroups={user.accessGroups}
+                        availableGroups={availableGroups}
+                    />
+                </div>
+            </div>
+
             <div className="mt-3 pt-3 border-t border-line">
                 <AdminUserActions
                     user={user}

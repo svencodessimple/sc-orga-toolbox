@@ -8,6 +8,7 @@ export interface ModuleConfigurationPolicy {
     enabled: boolean;
     sortOrder: boolean;
     allowedRoles: boolean;
+    allowedGroups: boolean;
 }
 
 export interface ModuleDefinition {
@@ -51,6 +52,7 @@ export const moduleDefinitions = [
             enabled: false,
             sortOrder: true,
             allowedRoles: false,
+            allowedGroups: false,
         },
     },
     {
@@ -68,6 +70,43 @@ export const moduleDefinitions = [
             enabled: false,
             sortOrder: true,
             allowedRoles: false,
+            allowedGroups: false,
+        },
+    },
+    {
+        id: 'group-management',
+        defaultTitle: 'Zugriffsgruppen',
+        defaultDescription: 'Zugriffsgruppen erstellen und Berechtigungen verwalten.',
+        defaultSortOrder: 300,
+        href: '/admin/groups',
+        category: 'administration',
+        defaultAllowedRoles: [Role.ADMIN],
+        mandatoryRoles: [Role.ADMIN],
+        configuration: {
+            title: true,
+            description: true,
+            enabled: false,
+            sortOrder: true,
+            allowedRoles: false,
+            allowedGroups: false,
+        },
+    },
+    {
+        id: 'member-area',
+        defaultTitle: 'Mitgliederbereich',
+        defaultDescription: 'Persönliche Übersicht und freigegebene Organisationsinhalte.',
+        defaultSortOrder: 100,
+        href: '/member-area',
+        category: 'module',
+        defaultAllowedRoles: [Role.MEMBER, Role.ADMIN],
+        mandatoryRoles: [],
+        configuration: {
+            title: true,
+            description: true,
+            enabled: true,
+            sortOrder: true,
+            allowedRoles: true,
+            allowedGroups: true,
         },
     },
 ] satisfies readonly ModuleDefinition[];

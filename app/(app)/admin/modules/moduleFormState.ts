@@ -10,6 +10,7 @@ export function createInitialModuleFormState(
         enabled: module.enabled,
         sortOrder: module.sortOrder,
         allowedRoles: [...module.allowedRoles],
+        allowedGroupIds: [...module.allowedGroupIds],
     };
 }
 
@@ -28,5 +29,6 @@ export function createDefaultModuleFormState(moduleId: string): ModuleFormState 
         allowedRoles: [
             ...new Set([...definition.defaultAllowedRoles, ...definition.mandatoryRoles]),
         ],
+        allowedGroupIds: [],
     };
 }

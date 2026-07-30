@@ -377,6 +377,9 @@ export const ModelName = {
     User: 'User',
     ModuleConfiguration: 'ModuleConfiguration',
     ModuleAllowedRole: 'ModuleAllowedRole',
+    AccessGroup: 'AccessGroup',
+    UserAccessGroup: 'UserAccessGroup',
+    ModuleAccessGroup: 'ModuleAccessGroup',
 } as const;
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName];
@@ -396,7 +399,13 @@ export type TypeMap<
         omit: GlobalOmitOptions;
     };
     meta: {
-        modelProps: 'user' | 'moduleConfiguration' | 'moduleAllowedRole';
+        modelProps:
+            | 'user'
+            | 'moduleConfiguration'
+            | 'moduleAllowedRole'
+            | 'accessGroup'
+            | 'userAccessGroup'
+            | 'moduleAccessGroup';
         txIsolationLevel: TransactionIsolationLevel;
     };
     model: {
@@ -603,6 +612,210 @@ export type TypeMap<
                 };
             };
         };
+        AccessGroup: {
+            payload: Prisma.$AccessGroupPayload<ExtArgs>;
+            fields: Prisma.AccessGroupFieldRefs;
+            operations: {
+                findUnique: {
+                    args: Prisma.AccessGroupFindUniqueArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$AccessGroupPayload> | null;
+                };
+                findUniqueOrThrow: {
+                    args: Prisma.AccessGroupFindUniqueOrThrowArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$AccessGroupPayload>;
+                };
+                findFirst: {
+                    args: Prisma.AccessGroupFindFirstArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$AccessGroupPayload> | null;
+                };
+                findFirstOrThrow: {
+                    args: Prisma.AccessGroupFindFirstOrThrowArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$AccessGroupPayload>;
+                };
+                findMany: {
+                    args: Prisma.AccessGroupFindManyArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$AccessGroupPayload>[];
+                };
+                create: {
+                    args: Prisma.AccessGroupCreateArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$AccessGroupPayload>;
+                };
+                createMany: {
+                    args: Prisma.AccessGroupCreateManyArgs<ExtArgs>;
+                    result: BatchPayload;
+                };
+                delete: {
+                    args: Prisma.AccessGroupDeleteArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$AccessGroupPayload>;
+                };
+                update: {
+                    args: Prisma.AccessGroupUpdateArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$AccessGroupPayload>;
+                };
+                deleteMany: {
+                    args: Prisma.AccessGroupDeleteManyArgs<ExtArgs>;
+                    result: BatchPayload;
+                };
+                updateMany: {
+                    args: Prisma.AccessGroupUpdateManyArgs<ExtArgs>;
+                    result: BatchPayload;
+                };
+                upsert: {
+                    args: Prisma.AccessGroupUpsertArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$AccessGroupPayload>;
+                };
+                aggregate: {
+                    args: Prisma.AccessGroupAggregateArgs<ExtArgs>;
+                    result: runtime.Types.Utils.Optional<Prisma.AggregateAccessGroup>;
+                };
+                groupBy: {
+                    args: Prisma.AccessGroupGroupByArgs<ExtArgs>;
+                    result: runtime.Types.Utils.Optional<Prisma.AccessGroupGroupByOutputType>[];
+                };
+                count: {
+                    args: Prisma.AccessGroupCountArgs<ExtArgs>;
+                    result:
+                        | runtime.Types.Utils.Optional<Prisma.AccessGroupCountAggregateOutputType>
+                        | number;
+                };
+            };
+        };
+        UserAccessGroup: {
+            payload: Prisma.$UserAccessGroupPayload<ExtArgs>;
+            fields: Prisma.UserAccessGroupFieldRefs;
+            operations: {
+                findUnique: {
+                    args: Prisma.UserAccessGroupFindUniqueArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$UserAccessGroupPayload> | null;
+                };
+                findUniqueOrThrow: {
+                    args: Prisma.UserAccessGroupFindUniqueOrThrowArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$UserAccessGroupPayload>;
+                };
+                findFirst: {
+                    args: Prisma.UserAccessGroupFindFirstArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$UserAccessGroupPayload> | null;
+                };
+                findFirstOrThrow: {
+                    args: Prisma.UserAccessGroupFindFirstOrThrowArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$UserAccessGroupPayload>;
+                };
+                findMany: {
+                    args: Prisma.UserAccessGroupFindManyArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$UserAccessGroupPayload>[];
+                };
+                create: {
+                    args: Prisma.UserAccessGroupCreateArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$UserAccessGroupPayload>;
+                };
+                createMany: {
+                    args: Prisma.UserAccessGroupCreateManyArgs<ExtArgs>;
+                    result: BatchPayload;
+                };
+                delete: {
+                    args: Prisma.UserAccessGroupDeleteArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$UserAccessGroupPayload>;
+                };
+                update: {
+                    args: Prisma.UserAccessGroupUpdateArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$UserAccessGroupPayload>;
+                };
+                deleteMany: {
+                    args: Prisma.UserAccessGroupDeleteManyArgs<ExtArgs>;
+                    result: BatchPayload;
+                };
+                updateMany: {
+                    args: Prisma.UserAccessGroupUpdateManyArgs<ExtArgs>;
+                    result: BatchPayload;
+                };
+                upsert: {
+                    args: Prisma.UserAccessGroupUpsertArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$UserAccessGroupPayload>;
+                };
+                aggregate: {
+                    args: Prisma.UserAccessGroupAggregateArgs<ExtArgs>;
+                    result: runtime.Types.Utils.Optional<Prisma.AggregateUserAccessGroup>;
+                };
+                groupBy: {
+                    args: Prisma.UserAccessGroupGroupByArgs<ExtArgs>;
+                    result: runtime.Types.Utils.Optional<Prisma.UserAccessGroupGroupByOutputType>[];
+                };
+                count: {
+                    args: Prisma.UserAccessGroupCountArgs<ExtArgs>;
+                    result:
+                        | runtime.Types.Utils.Optional<Prisma.UserAccessGroupCountAggregateOutputType>
+                        | number;
+                };
+            };
+        };
+        ModuleAccessGroup: {
+            payload: Prisma.$ModuleAccessGroupPayload<ExtArgs>;
+            fields: Prisma.ModuleAccessGroupFieldRefs;
+            operations: {
+                findUnique: {
+                    args: Prisma.ModuleAccessGroupFindUniqueArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$ModuleAccessGroupPayload> | null;
+                };
+                findUniqueOrThrow: {
+                    args: Prisma.ModuleAccessGroupFindUniqueOrThrowArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$ModuleAccessGroupPayload>;
+                };
+                findFirst: {
+                    args: Prisma.ModuleAccessGroupFindFirstArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$ModuleAccessGroupPayload> | null;
+                };
+                findFirstOrThrow: {
+                    args: Prisma.ModuleAccessGroupFindFirstOrThrowArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$ModuleAccessGroupPayload>;
+                };
+                findMany: {
+                    args: Prisma.ModuleAccessGroupFindManyArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$ModuleAccessGroupPayload>[];
+                };
+                create: {
+                    args: Prisma.ModuleAccessGroupCreateArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$ModuleAccessGroupPayload>;
+                };
+                createMany: {
+                    args: Prisma.ModuleAccessGroupCreateManyArgs<ExtArgs>;
+                    result: BatchPayload;
+                };
+                delete: {
+                    args: Prisma.ModuleAccessGroupDeleteArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$ModuleAccessGroupPayload>;
+                };
+                update: {
+                    args: Prisma.ModuleAccessGroupUpdateArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$ModuleAccessGroupPayload>;
+                };
+                deleteMany: {
+                    args: Prisma.ModuleAccessGroupDeleteManyArgs<ExtArgs>;
+                    result: BatchPayload;
+                };
+                updateMany: {
+                    args: Prisma.ModuleAccessGroupUpdateManyArgs<ExtArgs>;
+                    result: BatchPayload;
+                };
+                upsert: {
+                    args: Prisma.ModuleAccessGroupUpsertArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$ModuleAccessGroupPayload>;
+                };
+                aggregate: {
+                    args: Prisma.ModuleAccessGroupAggregateArgs<ExtArgs>;
+                    result: runtime.Types.Utils.Optional<Prisma.AggregateModuleAccessGroup>;
+                };
+                groupBy: {
+                    args: Prisma.ModuleAccessGroupGroupByArgs<ExtArgs>;
+                    result: runtime.Types.Utils.Optional<Prisma.ModuleAccessGroupGroupByOutputType>[];
+                };
+                count: {
+                    args: Prisma.ModuleAccessGroupCountArgs<ExtArgs>;
+                    result:
+                        | runtime.Types.Utils.Optional<Prisma.ModuleAccessGroupCountAggregateOutputType>
+                        | number;
+                };
+            };
+        };
     };
 } & {
     other: {
@@ -679,6 +892,37 @@ export const ModuleAllowedRoleScalarFieldEnum = {
 export type ModuleAllowedRoleScalarFieldEnum =
     (typeof ModuleAllowedRoleScalarFieldEnum)[keyof typeof ModuleAllowedRoleScalarFieldEnum];
 
+export const AccessGroupScalarFieldEnum = {
+    id: 'id',
+    key: 'key',
+    name: 'name',
+    description: 'description',
+    archivedAt: 'archivedAt',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+} as const;
+
+export type AccessGroupScalarFieldEnum =
+    (typeof AccessGroupScalarFieldEnum)[keyof typeof AccessGroupScalarFieldEnum];
+
+export const UserAccessGroupScalarFieldEnum = {
+    userId: 'userId',
+    groupId: 'groupId',
+    assignedAt: 'assignedAt',
+} as const;
+
+export type UserAccessGroupScalarFieldEnum =
+    (typeof UserAccessGroupScalarFieldEnum)[keyof typeof UserAccessGroupScalarFieldEnum];
+
+export const ModuleAccessGroupScalarFieldEnum = {
+    moduleId: 'moduleId',
+    groupId: 'groupId',
+    assignedAt: 'assignedAt',
+} as const;
+
+export type ModuleAccessGroupScalarFieldEnum =
+    (typeof ModuleAccessGroupScalarFieldEnum)[keyof typeof ModuleAccessGroupScalarFieldEnum];
+
 export const SortOrder = {
     asc: 'asc',
     desc: 'desc',
@@ -718,6 +962,32 @@ export const ModuleAllowedRoleOrderByRelevanceFieldEnum = {
 
 export type ModuleAllowedRoleOrderByRelevanceFieldEnum =
     (typeof ModuleAllowedRoleOrderByRelevanceFieldEnum)[keyof typeof ModuleAllowedRoleOrderByRelevanceFieldEnum];
+
+export const AccessGroupOrderByRelevanceFieldEnum = {
+    id: 'id',
+    key: 'key',
+    name: 'name',
+    description: 'description',
+} as const;
+
+export type AccessGroupOrderByRelevanceFieldEnum =
+    (typeof AccessGroupOrderByRelevanceFieldEnum)[keyof typeof AccessGroupOrderByRelevanceFieldEnum];
+
+export const UserAccessGroupOrderByRelevanceFieldEnum = {
+    userId: 'userId',
+    groupId: 'groupId',
+} as const;
+
+export type UserAccessGroupOrderByRelevanceFieldEnum =
+    (typeof UserAccessGroupOrderByRelevanceFieldEnum)[keyof typeof UserAccessGroupOrderByRelevanceFieldEnum];
+
+export const ModuleAccessGroupOrderByRelevanceFieldEnum = {
+    moduleId: 'moduleId',
+    groupId: 'groupId',
+} as const;
+
+export type ModuleAccessGroupOrderByRelevanceFieldEnum =
+    (typeof ModuleAccessGroupOrderByRelevanceFieldEnum)[keyof typeof ModuleAccessGroupOrderByRelevanceFieldEnum];
 
 /**
  * Field references
@@ -882,6 +1152,9 @@ export type GlobalOmitConfig = {
     user?: Prisma.UserOmit;
     moduleConfiguration?: Prisma.ModuleConfigurationOmit;
     moduleAllowedRole?: Prisma.ModuleAllowedRoleOmit;
+    accessGroup?: Prisma.AccessGroupOmit;
+    userAccessGroup?: Prisma.UserAccessGroupOmit;
+    moduleAccessGroup?: Prisma.ModuleAccessGroupOmit;
 };
 
 /* Types for Logging */

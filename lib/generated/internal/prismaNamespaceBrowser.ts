@@ -51,6 +51,9 @@ export const ModelName = {
     User: 'User',
     ModuleConfiguration: 'ModuleConfiguration',
     ModuleAllowedRole: 'ModuleAllowedRole',
+    AccessGroup: 'AccessGroup',
+    UserAccessGroup: 'UserAccessGroup',
+    ModuleAccessGroup: 'ModuleAccessGroup',
 } as const;
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName];
@@ -106,6 +109,37 @@ export const ModuleAllowedRoleScalarFieldEnum = {
 export type ModuleAllowedRoleScalarFieldEnum =
     (typeof ModuleAllowedRoleScalarFieldEnum)[keyof typeof ModuleAllowedRoleScalarFieldEnum];
 
+export const AccessGroupScalarFieldEnum = {
+    id: 'id',
+    key: 'key',
+    name: 'name',
+    description: 'description',
+    archivedAt: 'archivedAt',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+} as const;
+
+export type AccessGroupScalarFieldEnum =
+    (typeof AccessGroupScalarFieldEnum)[keyof typeof AccessGroupScalarFieldEnum];
+
+export const UserAccessGroupScalarFieldEnum = {
+    userId: 'userId',
+    groupId: 'groupId',
+    assignedAt: 'assignedAt',
+} as const;
+
+export type UserAccessGroupScalarFieldEnum =
+    (typeof UserAccessGroupScalarFieldEnum)[keyof typeof UserAccessGroupScalarFieldEnum];
+
+export const ModuleAccessGroupScalarFieldEnum = {
+    moduleId: 'moduleId',
+    groupId: 'groupId',
+    assignedAt: 'assignedAt',
+} as const;
+
+export type ModuleAccessGroupScalarFieldEnum =
+    (typeof ModuleAccessGroupScalarFieldEnum)[keyof typeof ModuleAccessGroupScalarFieldEnum];
+
 export const SortOrder = {
     asc: 'asc',
     desc: 'desc',
@@ -145,3 +179,29 @@ export const ModuleAllowedRoleOrderByRelevanceFieldEnum = {
 
 export type ModuleAllowedRoleOrderByRelevanceFieldEnum =
     (typeof ModuleAllowedRoleOrderByRelevanceFieldEnum)[keyof typeof ModuleAllowedRoleOrderByRelevanceFieldEnum];
+
+export const AccessGroupOrderByRelevanceFieldEnum = {
+    id: 'id',
+    key: 'key',
+    name: 'name',
+    description: 'description',
+} as const;
+
+export type AccessGroupOrderByRelevanceFieldEnum =
+    (typeof AccessGroupOrderByRelevanceFieldEnum)[keyof typeof AccessGroupOrderByRelevanceFieldEnum];
+
+export const UserAccessGroupOrderByRelevanceFieldEnum = {
+    userId: 'userId',
+    groupId: 'groupId',
+} as const;
+
+export type UserAccessGroupOrderByRelevanceFieldEnum =
+    (typeof UserAccessGroupOrderByRelevanceFieldEnum)[keyof typeof UserAccessGroupOrderByRelevanceFieldEnum];
+
+export const ModuleAccessGroupOrderByRelevanceFieldEnum = {
+    moduleId: 'moduleId',
+    groupId: 'groupId',
+} as const;
+
+export type ModuleAccessGroupOrderByRelevanceFieldEnum =
+    (typeof ModuleAccessGroupOrderByRelevanceFieldEnum)[keyof typeof ModuleAccessGroupOrderByRelevanceFieldEnum];

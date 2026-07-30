@@ -1,9 +1,10 @@
 'use client';
 
-import { type FormEvent, useState, useTransition } from 'react';
+import { useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 
+import type { AccessGroupOption } from '@/lib/access-groups/accessGroupTypes';
 import { TerminalPanel } from '@/components/mobiglas/TerminalPanel';
 
 import { resetModuleConfiguration, saveModuleConfiguration } from '../actions';
@@ -13,12 +14,14 @@ import { ModuleAccessFields } from './ModuleAccessFields';
 import { ModuleConfigurationActions } from './ModuleConfigurationActions';
 import { ModuleConfigurationHeader } from './ModuleConfigurationHeader';
 import { ModuleGeneralFields } from './ModuleGeneralFields';
+import { ModuleGroupAccessFields } from './ModuleGroupAccessFields';
 
 interface ModuleConfigurationCardProps {
     module: ModuleConfigurationViewModel;
+    availableGroups: readonly AccessGroupOption[];
 }
 
-export function ModuleConfigurationCard({ module }: ModuleConfigurationCardProps) {
+export function ModuleConfigurationCard({ module, availableGroups }: ModuleConfigurationCardProps) {
     const router = useRouter();
     const [isPending, startTransition] = useTransition();
 
@@ -33,7 +36,7 @@ export function ModuleConfigurationCard({ module }: ModuleConfigurationCardProps
         }));
     }
 
-    function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    function handleSubmit(event: React.SyntheticEvent<HTMLFormElement>) {
         event.preventDefault();
 
         startTransition(async () => {
@@ -44,6 +47,7 @@ export function ModuleConfigurationCard({ module }: ModuleConfigurationCardProps
                 enabled: formState.enabled,
                 sortOrder: formState.sortOrder,
                 allowedRoles: formState.allowedRoles,
+                allowedGroupIds: formState.allowedGroupIds,
             });
 
             if (!result.success) {
@@ -100,9 +104,20 @@ export function ModuleConfigurationCard({ module }: ModuleConfigurationCardProps
                         onChange={updateFormState}
                     />
 
+                    <ModuleGroupAccessFields
+                        module={module}
+                        formState={formState}
+                        availableGroups={availableGroups}
+                        isPending={isPending}
+                        onChange={updateFormState}
+                    />
+
                     <ModuleConfigurationActions
                         isPending={isPending}
-                        canReset={module.hasPersistentConfiguration}
+                        canReset={
+                            module.hasPersistentConfiguration ||
+                            module.hasPersistentGroupAssignments
+                        }
                         onReset={handleReset}
                     />
                 </form>

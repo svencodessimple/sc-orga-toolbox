@@ -7,6 +7,7 @@ export interface SaveModuleConfigurationInput {
     enabled: boolean;
     sortOrder: number;
     allowedRoles: Role[];
+    allowedGroupIds: string[];
 }
 
 export interface ModuleActionResult {

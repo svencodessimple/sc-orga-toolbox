@@ -1,6 +1,7 @@
 'use client';
 
 import type { UserStatus } from '@/lib/generated/client';
+import type { AccessGroupOption } from '@/lib/access-groups/accessGroupTypes';
 
 import type { AdminUser } from '../adminTypes';
 import { useAdminUserActions } from '../useAdminUserActions';
@@ -12,9 +13,10 @@ interface AdminUserListProps {
     users: AdminUser[];
     type: UserStatus;
     currentUserId: string;
+    availableGroups: readonly AccessGroupOption[];
 }
 
-export function AdminUserList({ users, type, currentUserId }: AdminUserListProps) {
+export function AdminUserList({ users, type, currentUserId, availableGroups }: AdminUserListProps) {
     const { isPending, modalConfig, openModal, closeModal, handleConfirm, actions } =
         useAdminUserActions();
 
@@ -33,6 +35,7 @@ export function AdminUserList({ users, type, currentUserId }: AdminUserListProps
                     users={users}
                     type={type}
                     currentUserId={currentUserId}
+                    availableGroups={availableGroups}
                     onAction={openModal}
                     actions={actions}
                 />
@@ -46,6 +49,7 @@ export function AdminUserList({ users, type, currentUserId }: AdminUserListProps
                         user={user}
                         type={type}
                         currentUserId={currentUserId}
+                        availableGroups={availableGroups}
                         onAction={openModal}
                         actions={actions}
                     />
