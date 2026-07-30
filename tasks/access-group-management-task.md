@@ -840,64 +840,66 @@ async function requireModuleAccess(moduleId: string): Promise<AuthenticatedSessi
 ## Funktionale Tests
 
 - [ ] Anwendung ohne vorhandene Gruppen starten
-- [ ] gültige Gruppe erstellen
-- [ ] Gruppenschlüssel normalisieren
-- [ ] ungültigen Gruppenschlüssel abweisen
-- [ ] doppelten Gruppenschlüssel abweisen
-- [ ] Anzeigenamen bearbeiten
-- [ ] Beschreibung bearbeiten
-- [ ] technischen Schlüssel nicht bearbeitbar machen
-- [ ] Gruppe archivieren
-- [ ] archivierte Gruppe eindeutig darstellen
-- [ ] Zuordnungen beim Archivieren erhalten
-- [ ] Zugriff einer archivierten Gruppe entziehen
-- [ ] Gruppe wiederherstellen
-- [ ] Zugriff nach Wiederherstellung erneut gewähren
-- [ ] verwendete Gruppe nicht löschen können
-- [ ] ungenutzte Gruppe löschen
-- [ ] aktive Gruppe einem aktiven Benutzer zuordnen
-- [ ] mehrere Gruppen einem Benutzer zuordnen
-- [ ] eine Gruppe mehreren Benutzern zuordnen
-- [ ] archivierte Gruppe nicht neu zuordnen können
-- [ ] neue Gruppenzuweisung für nicht aktiven Benutzer verhindern
-- [ ] Gruppenzuweisungen bei Benutzersperrung erhalten
-- [ ] Gruppe einem gruppenkonfigurierbaren Modul zuordnen
+- [x] gültige Gruppe erstellen
+- [x] Gruppenschlüssel normalisieren
+- [x] ungültigen Gruppenschlüssel abweisen
+- [x] doppelten Gruppenschlüssel abweisen
+- [x] Anzeigenamen bearbeiten
+- [x] Beschreibung bearbeiten
+- [x] technischen Schlüssel nicht bearbeitbar machen
+- [x] Gruppe archivieren
+- [x] archivierte Gruppe eindeutig darstellen
+- [x] Zuordnungen beim Archivieren erhalten
+- [x] Zugriff einer archivierten Gruppe entziehen
+- [x] Gruppe wiederherstellen
+- [x] Zugriff nach Wiederherstellung erneut gewähren
+- [x] verwendete Gruppe nicht löschen können
+- [x] ungenutzte Gruppe löschen
+- [x] aktive Gruppe einem aktiven Benutzer zuordnen
+- [x] mehrere Gruppen einem Benutzer zuordnen
+- [x] eine Gruppe mehreren Benutzern zuordnen
+- [x] archivierte Gruppe nicht neu zuordnen können
+- [x] neue Gruppenzuweisung für nicht aktiven Benutzer verhindern
+- [x] Gruppenzuweisungen bei Benutzersperrung erhalten
+- [x] Gruppe einem gruppenkonfigurierbaren Modul zuordnen
 - [ ] Gruppe mehreren Modulen zuordnen
-- [ ] archivierte Gruppe nicht neu einem Modul zuordnen
-- [ ] geschütztes Kernmodul nicht für Gruppen öffnen können
-- [ ] Modulreset entfernt Gruppenzuordnungen
-- [ ] unbekannte Modul-ID abweisen
-- [ ] unbekannte Gruppen-ID abweisen
+    - Derzeit nicht manuell prüfbar, da der technische Katalog nur ein gruppenkonfigurierbares Fachmodul enthält. Das Datenmodell unterstützt die Mehrfachzuordnung.
+- [x] archivierte Gruppe nicht neu einem Modul zuordnen
+- [x] geschütztes Kernmodul nicht für Gruppen öffnen können
+- [x] Modulreset entfernt Gruppenzuordnungen
+- [x] unbekannte Modul-ID abweisen
+- [x] unbekannte Gruppen-ID abweisen
+- [x] bestehende Gruppenzuweisungen bei nicht aktivem Benutzer entfernen
 
 ## Zugriffstests
 
-- [ ] Zugriff ausschließlich über Rolle testen
-- [ ] Zugriff ausschließlich über Gruppe testen
-- [ ] Zugriff über Rolle und Gruppe gleichzeitig testen
-- [ ] Zugriff ohne Rolle und Gruppe verhindern
-- [ ] deaktiviertes Modul trotz Gruppe ausblenden
-- [ ] archivierte Gruppe aus der Auswertung ausschließen
-- [ ] wiederhergestellte Gruppe erneut berücksichtigen
-- [ ] administratives Kernmodul ausschließlich als Admin sehen
-- [ ] manipulierte Kernmodul-Gruppenzuweisung ignorieren
-- [ ] direkte Modulroute ohne Berechtigung aufrufen
-- [ ] direkte Adminroute als Nicht-Admin aufrufen
-- [ ] unbekannte Modulzuordnung in der Datenbank ignorieren
+- [x] Zugriff ausschließlich über Rolle testen
+- [x] Zugriff ausschließlich über Gruppe testen
+- [x] Zugriff über Rolle und Gruppe gleichzeitig testen
+- [x] Zugriff ohne Rolle und Gruppe verhindern
+- [x] deaktiviertes Modul trotz Gruppe ausblenden
+- [x] archivierte Gruppe aus der Auswertung ausschließen
+- [x] wiederhergestellte Gruppe erneut berücksichtigen
+- [x] administratives Kernmodul ausschließlich als Admin sehen
+- [x] manipulierte Kernmodul-Gruppenzuweisung ignorieren
+- [x] direkte Modulroute ohne Berechtigung aufrufen
+- [x] direkte Adminroute als Nicht-Admin aufrufen
+- [x] unbekannte Modulzuordnung in der Datenbank ignorieren
 
 ## Oberflächentests
 
-- [ ] Gruppenverwaltung auf Desktop prüfen
-- [ ] Gruppenverwaltung auf Mobilgeräten prüfen
-- [ ] Mitgliederverwaltung auf Desktop prüfen
-- [ ] Mitgliederverwaltung auf Mobilgeräten prüfen
-- [ ] Modulverwaltung auf Desktop prüfen
-- [ ] Modulverwaltung auf Mobilgeräten prüfen
-- [ ] sichtbaren Tastaturfokus prüfen
-- [ ] Bedienung von Accordions mit Tastatur prüfen
-- [ ] deaktivierte Buttons und Felder prüfen
-- [ ] Erfolgs- und Fehlermeldungen prüfen
-- [ ] Bestätigungsdialoge prüfen
-- [ ] Empty States prüfen
+- [x] Gruppenverwaltung auf Desktop prüfen
+- [x] Gruppenverwaltung auf Mobilgeräten prüfen
+- [x] Mitgliederverwaltung auf Desktop prüfen
+- [x] Mitgliederverwaltung auf Mobilgeräten prüfen
+- [x] Modulverwaltung auf Desktop prüfen
+- [x] Modulverwaltung auf Mobilgeräten prüfen
+- [x] sichtbaren Tastaturfokus prüfen
+- [x] Bedienung von Accordions mit Tastatur prüfen
+- [x] deaktivierte Buttons und Felder prüfen
+- [x] Erfolgs- und Fehlermeldungen prüfen
+- [x] Bestätigungsdialoge prüfen
+- [x] Empty States prüfen
 
 ## Migrationstests
 

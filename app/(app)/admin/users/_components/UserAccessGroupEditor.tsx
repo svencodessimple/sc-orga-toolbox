@@ -32,7 +32,13 @@ export function UserAccessGroupEditor({
     const [isOpen, setIsOpen] = useState(false);
     const [selectedGroupIds, setSelectedGroupIds] = useState<string[]>([]);
 
+    const activeAssignments = assignedGroups.filter((group) => group.archivedAt === null);
+
     const archivedAssignments = assignedGroups.filter((group) => group.archivedAt !== null);
+
+    const isRemovalOnly = userStatus !== 'ACTIVE';
+
+    const editableGroups = isRemovalOnly ? activeAssignments : availableGroups;
 
     useEffect(() => {
         if (!isOpen) {
@@ -53,9 +59,7 @@ export function UserAccessGroupEditor({
     }, [isOpen, isPending]);
 
     function openEditor() {
-        setSelectedGroupIds(
-            assignedGroups.filter((group) => group.archivedAt === null).map((group) => group.id)
-        );
+        setSelectedGroupIds(activeAssignments.map((group) => group.id));
 
         setIsOpen(true);
     }
@@ -88,7 +92,7 @@ export function UserAccessGroupEditor({
         });
     }
 
-    if (userStatus !== 'ACTIVE') {
+    if (isRemovalOnly && activeAssignments.length === 0) {
         return null;
     }
 
@@ -100,7 +104,7 @@ export function UserAccessGroupEditor({
                 className="w-auto! px-3 py-1"
                 onClick={openEditor}
             >
-                Gruppen bearbeiten
+                {isRemovalOnly ? 'Gruppen bereinigen' : 'Gruppen bearbeiten'}
             </TerminalButton>
 
             {isOpen &&
@@ -137,7 +141,9 @@ export function UserAccessGroupEditor({
                                     </h2>
 
                                     <p className="mt-2 text-sm leading-6 text-text-dim">
-                                        Aktive Gruppen können hinzugefügt oder entfernt werden.
+                                        {isRemovalOnly
+                                            ? 'Bei inaktiven Benutzern können bestehende Gruppen nur entfernt werden.'
+                                            : 'Aktive Gruppen können hinzugefügt oder entfernt werden.'}
                                     </p>
                                 </div>
 
@@ -146,8 +152,8 @@ export function UserAccessGroupEditor({
                                         Aktive Gruppen
                                     </legend>
 
-                                    {availableGroups.length > 0 ? (
-                                        availableGroups.map((group) => (
+                                    {editableGroups.length > 0 ? (
+                                        editableGroups.map((group) => (
                                             <label
                                                 key={group.id}
                                                 className="flex cursor-pointer items-start gap-3 border border-line bg-panel-alt p-3 transition hover:border-cyan-dim"

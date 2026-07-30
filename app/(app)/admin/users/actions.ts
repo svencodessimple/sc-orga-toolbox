@@ -341,13 +341,6 @@ export async function updateUserAccessGroups(input: unknown): Promise<AdminActio
                 };
             }
 
-            if (user.status !== UserStatus.ACTIVE) {
-                return {
-                    status: 'user-not-active' as const,
-                    userStatus: user.status,
-                };
-            }
-
             const requestedGroups = await transaction.accessGroup.findMany({
                 where: {
                     id: {
@@ -396,6 +389,13 @@ export async function updateUserAccessGroups(input: unknown): Promise<AdminActio
                 (groupId) => !existingGroupIds.has(groupId)
             );
 
+            if (user.status !== UserStatus.ACTIVE && groupIdsToAdd.length > 0) {
+                return {
+                    status: 'inactive-user-addition' as const,
+                    userStatus: user.status,
+                };
+            }
+
             if (groupIdsToRemove.length > 0) {
                 await transaction.userAccessGroup.deleteMany({
                     where: {
@@ -428,10 +428,12 @@ export async function updateUserAccessGroups(input: unknown): Promise<AdminActio
             };
         }
 
-        if (outcome.status === 'user-not-active') {
+        if (outcome.status === 'inactive-user-addition') {
             return {
                 success: false,
-                message: 'Gruppenzuweisungen können nur bei aktiven Benutzern geändert werden.',
+                message:
+                    'Inaktiven Benutzern können keine neuen Gruppen zugewiesen werden. ' +
+                    'Bestehende Zuweisungen dürfen nur entfernt werden.',
             };
         }
 
