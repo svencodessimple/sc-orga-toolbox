@@ -468,3 +468,34 @@ export async function updateUserAccessGroups(input: unknown): Promise<AdminActio
         };
     }
 }
+
+/**
+ * Entsperrt einen gesperrten User.
+ * Rolle und Gruppenzuweisungen bleiben unverändert erhalten.
+ * Erlaubter Ausgangsstatus: nur BANNED
+ */
+export async function unbanUser(userId: string): Promise<AdminActionResult> {
+    await assertAdmin();
+    const user = await getUserOrThrow(userId);
+
+    if (user.status !== UserStatus.BANNED) {
+        return {
+            success: false,
+            message: `Entsperren ist nur bei gesperrten Usern möglich. Aktueller Status: ${user.status}.`,
+        };
+    }
+
+    await prisma.user.update({
+        where: { id: userId },
+        data: {
+            status: UserStatus.ACTIVE,
+            bannedAt: null,
+        },
+    });
+
+    revalidatePath('/admin/users');
+
+    return {
+        success: true,
+    };
+}
