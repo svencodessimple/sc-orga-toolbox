@@ -24,6 +24,11 @@ jobs:
 
       - name: Generate Prisma Client
         run: npx prisma generate
+        env:
+          DB_HOST: localhost
+          DB_USER: ci
+          DB_PASSWORD: ci
+          DB_NAME: ci
 
       - name: Run quality checks
         run: make check
