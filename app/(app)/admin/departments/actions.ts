@@ -15,9 +15,27 @@ import type {
     DepartmentActionResult,
     UpdateDepartmentInput,
 } from './departmentActionTypes';
+import {
+    assignDepartmentMemberSchema,
+    removeDepartmentMemberSchema,
+    searchDepartmentMembersSchema,
+    updateDepartmentMemberRoleSchema,
+} from '@/lib/departments/departmentMembershipSchemas';
+import { UserStatus } from '@/lib/generated/browser';
+import { searchAvailableDepartmentMembers } from '@/lib/departments/departmentMembershipService';
 
 function revalidateDepartmentRoutes() {
     revalidatePath('/admin/departments');
+}
+
+async function getActiveDepartment(departmentId: string) {
+    return prisma.department.findFirst({
+        where: {
+            id: departmentId,
+            archivedAt: null,
+        },
+        select: { id: true },
+    });
 }
 
 export async function createDepartment(
@@ -223,6 +241,209 @@ export async function restoreDepartment(departmentId: string): Promise<Departmen
         return {
             success: false,
             message: 'Die Abteilung konnte nicht wiederhergestellt werden.',
+        };
+    }
+}
+
+export async function searchDepartmentMembers(input: { departmentId: string; query: string }) {
+    await requireAdminSession();
+
+    const validation = searchDepartmentMembersSchema.safeParse(input);
+
+    if (!validation.success) {
+        return {
+            success: false,
+            message: validation.error.issues[0]?.message ?? 'Die Suche ist ungültig.',
+            users: [],
+        };
+    }
+
+    try {
+        const department = await getActiveDepartment(validation.data.departmentId);
+
+        if (!department) {
+            return {
+                success: false,
+                message: 'Die Abteilung wurde nicht gefunden oder ist archiviert.',
+                users: [],
+            };
+        }
+
+        const users = await searchAvailableDepartmentMembers(
+            validation.data.departmentId,
+            validation.data.query
+        );
+
+        return { success: true, message: '', users };
+    } catch (error) {
+        console.error('Mitgliedersuche fehlgeschlagen.', error);
+
+        return {
+            success: false,
+            message: 'Die User konnten nicht gesucht werden.',
+            users: [],
+        };
+    }
+}
+
+export async function assignDepartmentMember(input: {
+    departmentId: string;
+    userId: string;
+    role?: 'MEMBER' | 'MANAGER';
+}): Promise<DepartmentActionResult> {
+    await requireAdminSession();
+
+    const validation = assignDepartmentMemberSchema.safeParse(input);
+
+    if (!validation.success) {
+        return {
+            success: false,
+            message: validation.error.issues[0]?.message ?? 'Die Zuordnung ist ungültig.',
+        };
+    }
+
+    const { departmentId, userId, role } = validation.data;
+
+    try {
+        const department = await getActiveDepartment(departmentId);
+
+        if (!department) {
+            return {
+                success: false,
+                message: 'Die Abteilung wurde nicht gefunden oder ist archiviert.',
+            };
+        }
+
+        const user = await prisma.user.findFirst({
+            where: { id: userId, status: UserStatus.ACTIVE },
+            select: { id: true },
+        });
+
+        if (!user) {
+            return {
+                success: false,
+                message: 'Der User ist nicht aktiv oder wurde nicht gefunden.',
+            };
+        }
+
+        await prisma.departmentMembership.create({
+            data: { departmentId, userId, role },
+        });
+
+        revalidateDepartmentRoutes();
+
+        return { success: true, message: 'Mitglied hinzugefügt.' };
+    } catch (error) {
+        console.error('Mitglied konnte nicht hinzugefügt werden.', error);
+
+        return {
+            success: false,
+            message:
+                'Mitglied konnte nicht hinzugefügt werden. Möglicherweise besteht die Zuordnung bereits.',
+        };
+    }
+}
+
+export async function updateDepartmentMemberRole(input: {
+    departmentId: string;
+    userId: string;
+    role: 'MEMBER' | 'MANAGER';
+}): Promise<DepartmentActionResult> {
+    await requireAdminSession();
+
+    const validation = updateDepartmentMemberRoleSchema.safeParse(input);
+
+    if (!validation.success) {
+        return {
+            success: false,
+            message: validation.error.issues[0]?.message ?? 'Die Rolle ist ungültig.',
+        };
+    }
+
+    const { departmentId, userId, role } = validation.data;
+
+    try {
+        const department = await getActiveDepartment(departmentId);
+
+        if (!department) {
+            return {
+                success: false,
+                message: 'Die Abteilung wurde nicht gefunden oder ist archiviert.',
+            };
+        }
+
+        const result = await prisma.departmentMembership.updateMany({
+            where: { departmentId, userId },
+            data: { role },
+        });
+
+        if (result.count === 0) {
+            return {
+                success: false,
+                message: 'Die Mitgliedschaft wurde nicht gefunden.',
+            };
+        }
+
+        revalidateDepartmentRoutes();
+
+        return { success: true, message: 'Abteilungsrolle geändert.' };
+    } catch (error) {
+        console.error('Abteilungsrolle konnte nicht geändert werden.', error);
+
+        return {
+            success: false,
+            message: 'Die Abteilungsrolle konnte nicht geändert werden.',
+        };
+    }
+}
+
+export async function removeDepartmentMember(input: {
+    departmentId: string;
+    userId: string;
+}): Promise<DepartmentActionResult> {
+    await requireAdminSession();
+
+    const validation = removeDepartmentMemberSchema.safeParse(input);
+
+    if (!validation.success) {
+        return {
+            success: false,
+            message: validation.error.issues[0]?.message ?? 'Die Zuordnung ist ungültig.',
+        };
+    }
+
+    const { departmentId, userId } = validation.data;
+
+    try {
+        const department = await getActiveDepartment(departmentId);
+
+        if (!department) {
+            return {
+                success: false,
+                message: 'Die Abteilung wurde nicht gefunden oder ist archiviert.',
+            };
+        }
+
+        const result = await prisma.departmentMembership.deleteMany({
+            where: { departmentId, userId },
+        });
+
+        if (result.count === 0) {
+            return {
+                success: false,
+                message: 'Die Mitgliedschaft wurde nicht gefunden.',
+            };
+        }
+
+        revalidateDepartmentRoutes();
+
+        return { success: true, message: 'Mitglied entfernt.' };
+    } catch (error) {
+        console.error('Mitglied konnte nicht entfernt werden.', error);
+
+        return {
+            success: false,
+            message: 'Mitglied konnte nicht entfernt werden.',
         };
     }
 }
