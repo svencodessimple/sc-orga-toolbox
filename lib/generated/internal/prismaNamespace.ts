@@ -380,6 +380,8 @@ export const ModelName = {
     AccessGroup: 'AccessGroup',
     UserAccessGroup: 'UserAccessGroup',
     ModuleAccessGroup: 'ModuleAccessGroup',
+    Department: 'Department',
+    DepartmentMembership: 'DepartmentMembership',
 } as const;
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName];
@@ -405,7 +407,9 @@ export type TypeMap<
             | 'moduleAllowedRole'
             | 'accessGroup'
             | 'userAccessGroup'
-            | 'moduleAccessGroup';
+            | 'moduleAccessGroup'
+            | 'department'
+            | 'departmentMembership';
         txIsolationLevel: TransactionIsolationLevel;
     };
     model: {
@@ -816,6 +820,142 @@ export type TypeMap<
                 };
             };
         };
+        Department: {
+            payload: Prisma.$DepartmentPayload<ExtArgs>;
+            fields: Prisma.DepartmentFieldRefs;
+            operations: {
+                findUnique: {
+                    args: Prisma.DepartmentFindUniqueArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$DepartmentPayload> | null;
+                };
+                findUniqueOrThrow: {
+                    args: Prisma.DepartmentFindUniqueOrThrowArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$DepartmentPayload>;
+                };
+                findFirst: {
+                    args: Prisma.DepartmentFindFirstArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$DepartmentPayload> | null;
+                };
+                findFirstOrThrow: {
+                    args: Prisma.DepartmentFindFirstOrThrowArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$DepartmentPayload>;
+                };
+                findMany: {
+                    args: Prisma.DepartmentFindManyArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$DepartmentPayload>[];
+                };
+                create: {
+                    args: Prisma.DepartmentCreateArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$DepartmentPayload>;
+                };
+                createMany: {
+                    args: Prisma.DepartmentCreateManyArgs<ExtArgs>;
+                    result: BatchPayload;
+                };
+                delete: {
+                    args: Prisma.DepartmentDeleteArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$DepartmentPayload>;
+                };
+                update: {
+                    args: Prisma.DepartmentUpdateArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$DepartmentPayload>;
+                };
+                deleteMany: {
+                    args: Prisma.DepartmentDeleteManyArgs<ExtArgs>;
+                    result: BatchPayload;
+                };
+                updateMany: {
+                    args: Prisma.DepartmentUpdateManyArgs<ExtArgs>;
+                    result: BatchPayload;
+                };
+                upsert: {
+                    args: Prisma.DepartmentUpsertArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$DepartmentPayload>;
+                };
+                aggregate: {
+                    args: Prisma.DepartmentAggregateArgs<ExtArgs>;
+                    result: runtime.Types.Utils.Optional<Prisma.AggregateDepartment>;
+                };
+                groupBy: {
+                    args: Prisma.DepartmentGroupByArgs<ExtArgs>;
+                    result: runtime.Types.Utils.Optional<Prisma.DepartmentGroupByOutputType>[];
+                };
+                count: {
+                    args: Prisma.DepartmentCountArgs<ExtArgs>;
+                    result:
+                        | runtime.Types.Utils.Optional<Prisma.DepartmentCountAggregateOutputType>
+                        | number;
+                };
+            };
+        };
+        DepartmentMembership: {
+            payload: Prisma.$DepartmentMembershipPayload<ExtArgs>;
+            fields: Prisma.DepartmentMembershipFieldRefs;
+            operations: {
+                findUnique: {
+                    args: Prisma.DepartmentMembershipFindUniqueArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$DepartmentMembershipPayload> | null;
+                };
+                findUniqueOrThrow: {
+                    args: Prisma.DepartmentMembershipFindUniqueOrThrowArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$DepartmentMembershipPayload>;
+                };
+                findFirst: {
+                    args: Prisma.DepartmentMembershipFindFirstArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$DepartmentMembershipPayload> | null;
+                };
+                findFirstOrThrow: {
+                    args: Prisma.DepartmentMembershipFindFirstOrThrowArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$DepartmentMembershipPayload>;
+                };
+                findMany: {
+                    args: Prisma.DepartmentMembershipFindManyArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$DepartmentMembershipPayload>[];
+                };
+                create: {
+                    args: Prisma.DepartmentMembershipCreateArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$DepartmentMembershipPayload>;
+                };
+                createMany: {
+                    args: Prisma.DepartmentMembershipCreateManyArgs<ExtArgs>;
+                    result: BatchPayload;
+                };
+                delete: {
+                    args: Prisma.DepartmentMembershipDeleteArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$DepartmentMembershipPayload>;
+                };
+                update: {
+                    args: Prisma.DepartmentMembershipUpdateArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$DepartmentMembershipPayload>;
+                };
+                deleteMany: {
+                    args: Prisma.DepartmentMembershipDeleteManyArgs<ExtArgs>;
+                    result: BatchPayload;
+                };
+                updateMany: {
+                    args: Prisma.DepartmentMembershipUpdateManyArgs<ExtArgs>;
+                    result: BatchPayload;
+                };
+                upsert: {
+                    args: Prisma.DepartmentMembershipUpsertArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$DepartmentMembershipPayload>;
+                };
+                aggregate: {
+                    args: Prisma.DepartmentMembershipAggregateArgs<ExtArgs>;
+                    result: runtime.Types.Utils.Optional<Prisma.AggregateDepartmentMembership>;
+                };
+                groupBy: {
+                    args: Prisma.DepartmentMembershipGroupByArgs<ExtArgs>;
+                    result: runtime.Types.Utils.Optional<Prisma.DepartmentMembershipGroupByOutputType>[];
+                };
+                count: {
+                    args: Prisma.DepartmentMembershipCountArgs<ExtArgs>;
+                    result:
+                        | runtime.Types.Utils.Optional<Prisma.DepartmentMembershipCountAggregateOutputType>
+                        | number;
+                };
+            };
+        };
     };
 } & {
     other: {
@@ -923,6 +1063,28 @@ export const ModuleAccessGroupScalarFieldEnum = {
 export type ModuleAccessGroupScalarFieldEnum =
     (typeof ModuleAccessGroupScalarFieldEnum)[keyof typeof ModuleAccessGroupScalarFieldEnum];
 
+export const DepartmentScalarFieldEnum = {
+    id: 'id',
+    name: 'name',
+    description: 'description',
+    archivedAt: 'archivedAt',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+} as const;
+
+export type DepartmentScalarFieldEnum =
+    (typeof DepartmentScalarFieldEnum)[keyof typeof DepartmentScalarFieldEnum];
+
+export const DepartmentMembershipScalarFieldEnum = {
+    userId: 'userId',
+    departmentId: 'departmentId',
+    role: 'role',
+    assignedAt: 'assignedAt',
+} as const;
+
+export type DepartmentMembershipScalarFieldEnum =
+    (typeof DepartmentMembershipScalarFieldEnum)[keyof typeof DepartmentMembershipScalarFieldEnum];
+
 export const SortOrder = {
     asc: 'asc',
     desc: 'desc',
@@ -989,6 +1151,23 @@ export const ModuleAccessGroupOrderByRelevanceFieldEnum = {
 export type ModuleAccessGroupOrderByRelevanceFieldEnum =
     (typeof ModuleAccessGroupOrderByRelevanceFieldEnum)[keyof typeof ModuleAccessGroupOrderByRelevanceFieldEnum];
 
+export const DepartmentOrderByRelevanceFieldEnum = {
+    id: 'id',
+    name: 'name',
+    description: 'description',
+} as const;
+
+export type DepartmentOrderByRelevanceFieldEnum =
+    (typeof DepartmentOrderByRelevanceFieldEnum)[keyof typeof DepartmentOrderByRelevanceFieldEnum];
+
+export const DepartmentMembershipOrderByRelevanceFieldEnum = {
+    userId: 'userId',
+    departmentId: 'departmentId',
+} as const;
+
+export type DepartmentMembershipOrderByRelevanceFieldEnum =
+    (typeof DepartmentMembershipOrderByRelevanceFieldEnum)[keyof typeof DepartmentMembershipOrderByRelevanceFieldEnum];
+
 /**
  * Field references
  */
@@ -1025,6 +1204,14 @@ export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel
  * Reference to a field of type 'Boolean'
  */
 export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>;
+
+/**
+ * Reference to a field of type 'DepartmentRole'
+ */
+export type EnumDepartmentRoleFieldRefInput<$PrismaModel> = FieldRefInputType<
+    $PrismaModel,
+    'DepartmentRole'
+>;
 
 /**
  * Reference to a field of type 'Float'
@@ -1155,6 +1342,8 @@ export type GlobalOmitConfig = {
     accessGroup?: Prisma.AccessGroupOmit;
     userAccessGroup?: Prisma.UserAccessGroupOmit;
     moduleAccessGroup?: Prisma.ModuleAccessGroupOmit;
+    department?: Prisma.DepartmentOmit;
+    departmentMembership?: Prisma.DepartmentMembershipOmit;
 };
 
 /* Types for Logging */

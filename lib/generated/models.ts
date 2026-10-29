@@ -13,4 +13,6 @@ export type * from './models/ModuleAllowedRole';
 export type * from './models/AccessGroup';
 export type * from './models/UserAccessGroup';
 export type * from './models/ModuleAccessGroup';
+export type * from './models/Department';
+export type * from './models/DepartmentMembership';
 export type * from './commonInputTypes';
