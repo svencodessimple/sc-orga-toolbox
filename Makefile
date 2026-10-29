@@ -1,4 +1,4 @@
-.PHONY: help dev up down restart db-migrate db-studio db-push lint format prod-config prod-build prod-deploy prod-deploy-skip-build prod-deploy-prune prod-up prod-down prod-restart prod-ps prod-logs prod-logs-webapp prod-logs-nginx prod-logs-db prod-health prod-nginx-test prod-migrate prod-shell-webapp prod-shell-nginx prod-shell-db prod-backup prod-restore
+.PHONY: help dev up down restart db-migrate db-studio db-push lint check format prod-config prod-build prod-deploy prod-deploy-skip-build prod-deploy-prune prod-up prod-down prod-restart prod-ps prod-logs prod-logs-webapp prod-logs-nginx prod-logs-db prod-health prod-nginx-test prod-migrate prod-shell-webapp prod-shell-nginx prod-shell-db prod-backup prod-restore
 
 # Standard-Target: Zeigt die Hilfe an
 .DEFAULT_GOAL := help
@@ -42,6 +42,11 @@ db-studio: ## Startet Prisma Studio auf Port 5555
 
 lint: ## Überprüft den Code mit ESLint
 	npm run lint
+
+check: ## Führt alle Qualitätsprüfungen aus
+	npm run lint
+	npx tsc --noEmit
+	npx prisma validate
 
 format: ## Formatiert das gesamte Projekt mit Prettier
 	npx prettier --write .
