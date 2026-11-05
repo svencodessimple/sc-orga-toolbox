@@ -23,19 +23,10 @@ import {
 } from '@/lib/departments/departmentMembershipSchemas';
 import { UserStatus } from '@/lib/generated/browser';
 import { searchAvailableDepartmentMembers } from '@/lib/departments/departmentMembershipService';
+import { hasDepartmentManagementAccess } from '@/lib/departments/departmentPermissions';
 
 function revalidateDepartmentRoutes() {
     revalidatePath('/admin/departments');
-}
-
-async function getActiveDepartment(departmentId: string) {
-    return prisma.department.findFirst({
-        where: {
-            id: departmentId,
-            archivedAt: null,
-        },
-        select: { id: true },
-    });
 }
 
 export async function createDepartment(
@@ -259,21 +250,17 @@ export async function searchDepartmentMembers(input: { departmentId: string; que
         };
     }
 
+    const { departmentId, query } = validation.data;
+
+    if (!(await hasDepartmentManagementAccess(departmentId))) {
+        return {
+            success: false,
+            message: 'Keine Berechtigung für diese Abteilung oder Abteilung nicht verfügbar.',
+        };
+    }
+
     try {
-        const department = await getActiveDepartment(validation.data.departmentId);
-
-        if (!department) {
-            return {
-                success: false,
-                message: 'Die Abteilung wurde nicht gefunden oder ist archiviert.',
-                users: [],
-            };
-        }
-
-        const users = await searchAvailableDepartmentMembers(
-            validation.data.departmentId,
-            validation.data.query
-        );
+        const users = await searchAvailableDepartmentMembers(departmentId, query);
 
         return { success: true, message: '', users };
     } catch (error) {
@@ -292,8 +279,6 @@ export async function assignDepartmentMember(input: {
     userId: string;
     role?: 'MEMBER' | 'MANAGER';
 }): Promise<DepartmentActionResult> {
-    await requireAdminSession();
-
     const validation = assignDepartmentMemberSchema.safeParse(input);
 
     if (!validation.success) {
@@ -305,16 +290,14 @@ export async function assignDepartmentMember(input: {
 
     const { departmentId, userId, role } = validation.data;
 
+    if (!(await hasDepartmentManagementAccess(departmentId))) {
+        return {
+            success: false,
+            message: 'Keine Berechtigung für diese Abteilung oder Abteilung nicht verfügbar.',
+        };
+    }
+
     try {
-        const department = await getActiveDepartment(departmentId);
-
-        if (!department) {
-            return {
-                success: false,
-                message: 'Die Abteilung wurde nicht gefunden oder ist archiviert.',
-            };
-        }
-
         const user = await prisma.user.findFirst({
             where: { id: userId, status: UserStatus.ACTIVE },
             select: { id: true },
@@ -350,8 +333,6 @@ export async function updateDepartmentMemberRole(input: {
     userId: string;
     role: 'MEMBER' | 'MANAGER';
 }): Promise<DepartmentActionResult> {
-    await requireAdminSession();
-
     const validation = updateDepartmentMemberRoleSchema.safeParse(input);
 
     if (!validation.success) {
@@ -363,16 +344,14 @@ export async function updateDepartmentMemberRole(input: {
 
     const { departmentId, userId, role } = validation.data;
 
+    if (!(await hasDepartmentManagementAccess(departmentId))) {
+        return {
+            success: false,
+            message: 'Keine Berechtigung für diese Abteilung oder Abteilung nicht verfügbar.',
+        };
+    }
+
     try {
-        const department = await getActiveDepartment(departmentId);
-
-        if (!department) {
-            return {
-                success: false,
-                message: 'Die Abteilung wurde nicht gefunden oder ist archiviert.',
-            };
-        }
-
         const result = await prisma.departmentMembership.updateMany({
             where: { departmentId, userId },
             data: { role },
@@ -402,8 +381,6 @@ export async function removeDepartmentMember(input: {
     departmentId: string;
     userId: string;
 }): Promise<DepartmentActionResult> {
-    await requireAdminSession();
-
     const validation = removeDepartmentMemberSchema.safeParse(input);
 
     if (!validation.success) {
@@ -415,16 +392,14 @@ export async function removeDepartmentMember(input: {
 
     const { departmentId, userId } = validation.data;
 
+    if (!(await hasDepartmentManagementAccess(departmentId))) {
+        return {
+            success: false,
+            message: 'Keine Berechtigung für diese Abteilung oder Abteilung nicht verfügbar.',
+        };
+    }
+
     try {
-        const department = await getActiveDepartment(departmentId);
-
-        if (!department) {
-            return {
-                success: false,
-                message: 'Die Abteilung wurde nicht gefunden oder ist archiviert.',
-            };
-        }
-
         const result = await prisma.departmentMembership.deleteMany({
             where: { departmentId, userId },
         });
