@@ -93,6 +93,7 @@ export async function updateDepartment(
         const result = await prisma.department.updateMany({
             where: {
                 id: departmentId,
+                archivedAt: null,
             },
             data: {
                 name,
@@ -103,7 +104,7 @@ export async function updateDepartment(
         if (result.count === 0) {
             return {
                 success: false,
-                message: 'Die angegebene Abteilung wurde nicht gefunden.',
+                message: 'Die Abteilung wurde nicht gefunden oder ist archiviert.',
             };
         }
 
