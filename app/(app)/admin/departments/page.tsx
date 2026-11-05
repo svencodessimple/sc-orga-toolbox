@@ -53,9 +53,30 @@ export default async function DepartmentManagementPage() {
                 ))}
             </section>
 
-            {archivedDepartments.map((department) => (
-                <DepartmentCard key={department.id} department={department} isArchived={true} />
-            ))}
+            {archivedDepartments.length > 0 && (
+                <section className="space-y-5">
+                    <div>
+                        <p className="eyebrow">
+                            <span className="eyebrow-dot" />
+                            Archived Departments
+                        </p>
+
+                        <h2 className="font-display text-2xl uppercase tracking-wider text-text">
+                            Archivierte Abteilungen
+                        </h2>
+                    </div>
+
+                    <div className="space-y-4">
+                        {archivedDepartments.map((department) => (
+                            <DepartmentCard
+                                key={department.id}
+                                department={department}
+                                isArchived={true}
+                            />
+                        ))}
+                    </div>
+                </section>
+            )}
         </div>
     );
 }
