@@ -46,3 +46,13 @@ export type UserAccessGroup = Prisma.UserAccessGroupModel;
  *
  */
 export type ModuleAccessGroup = Prisma.ModuleAccessGroupModel;
+/**
+ * Model Department
+ *
+ */
+export type Department = Prisma.DepartmentModel;
+/**
+ * Model DepartmentMembership
+ *
+ */
+export type DepartmentMembership = Prisma.DepartmentMembershipModel;

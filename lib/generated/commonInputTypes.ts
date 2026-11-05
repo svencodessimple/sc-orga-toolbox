@@ -207,6 +207,23 @@ export type BoolWithAggregatesFilter<$PrismaModel = never> = {
     _max?: Prisma.NestedBoolFilter<$PrismaModel>;
 };
 
+export type EnumDepartmentRoleFilter<$PrismaModel = never> = {
+    equals?: $Enums.DepartmentRole | Prisma.EnumDepartmentRoleFieldRefInput<$PrismaModel>;
+    in?: $Enums.DepartmentRole[];
+    notIn?: $Enums.DepartmentRole[];
+    not?: Prisma.NestedEnumDepartmentRoleFilter<$PrismaModel> | $Enums.DepartmentRole;
+};
+
+export type EnumDepartmentRoleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.DepartmentRole | Prisma.EnumDepartmentRoleFieldRefInput<$PrismaModel>;
+    in?: $Enums.DepartmentRole[];
+    notIn?: $Enums.DepartmentRole[];
+    not?: Prisma.NestedEnumDepartmentRoleWithAggregatesFilter<$PrismaModel> | $Enums.DepartmentRole;
+    _count?: Prisma.NestedIntFilter<$PrismaModel>;
+    _min?: Prisma.NestedEnumDepartmentRoleFilter<$PrismaModel>;
+    _max?: Prisma.NestedEnumDepartmentRoleFilter<$PrismaModel>;
+};
+
 export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | Prisma.StringFieldRefInput<$PrismaModel>;
     in?: string[];
@@ -417,4 +434,21 @@ export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
     _count?: Prisma.NestedIntFilter<$PrismaModel>;
     _min?: Prisma.NestedBoolFilter<$PrismaModel>;
     _max?: Prisma.NestedBoolFilter<$PrismaModel>;
+};
+
+export type NestedEnumDepartmentRoleFilter<$PrismaModel = never> = {
+    equals?: $Enums.DepartmentRole | Prisma.EnumDepartmentRoleFieldRefInput<$PrismaModel>;
+    in?: $Enums.DepartmentRole[];
+    notIn?: $Enums.DepartmentRole[];
+    not?: Prisma.NestedEnumDepartmentRoleFilter<$PrismaModel> | $Enums.DepartmentRole;
+};
+
+export type NestedEnumDepartmentRoleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.DepartmentRole | Prisma.EnumDepartmentRoleFieldRefInput<$PrismaModel>;
+    in?: $Enums.DepartmentRole[];
+    notIn?: $Enums.DepartmentRole[];
+    not?: Prisma.NestedEnumDepartmentRoleWithAggregatesFilter<$PrismaModel> | $Enums.DepartmentRole;
+    _count?: Prisma.NestedIntFilter<$PrismaModel>;
+    _min?: Prisma.NestedEnumDepartmentRoleFilter<$PrismaModel>;
+    _max?: Prisma.NestedEnumDepartmentRoleFilter<$PrismaModel>;
 };

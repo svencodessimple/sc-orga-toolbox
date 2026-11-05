@@ -109,6 +109,24 @@ export const moduleDefinitions = [
             allowedGroups: true,
         },
     },
+    {
+        id: 'department-management',
+        defaultTitle: 'Abteilungsverwaltung',
+        defaultDescription: 'Abteilungen erstellen, konfigurieren und verwalten.',
+        defaultSortOrder: 400,
+        href: '/admin/departments',
+        category: 'administration',
+        defaultAllowedRoles: [Role.ADMIN],
+        mandatoryRoles: [Role.ADMIN],
+        configuration: {
+            title: true,
+            description: true,
+            enabled: false,
+            sortOrder: true,
+            allowedRoles: false,
+            allowedGroups: false,
+        },
+    },
 ] satisfies readonly ModuleDefinition[];
 
 export function getModuleDefinition(moduleId: string): ModuleDefinition | undefined {

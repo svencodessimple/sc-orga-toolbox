@@ -54,6 +54,8 @@ export const ModelName = {
     AccessGroup: 'AccessGroup',
     UserAccessGroup: 'UserAccessGroup',
     ModuleAccessGroup: 'ModuleAccessGroup',
+    Department: 'Department',
+    DepartmentMembership: 'DepartmentMembership',
 } as const;
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName];
@@ -140,6 +142,28 @@ export const ModuleAccessGroupScalarFieldEnum = {
 export type ModuleAccessGroupScalarFieldEnum =
     (typeof ModuleAccessGroupScalarFieldEnum)[keyof typeof ModuleAccessGroupScalarFieldEnum];
 
+export const DepartmentScalarFieldEnum = {
+    id: 'id',
+    name: 'name',
+    description: 'description',
+    archivedAt: 'archivedAt',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+} as const;
+
+export type DepartmentScalarFieldEnum =
+    (typeof DepartmentScalarFieldEnum)[keyof typeof DepartmentScalarFieldEnum];
+
+export const DepartmentMembershipScalarFieldEnum = {
+    userId: 'userId',
+    departmentId: 'departmentId',
+    role: 'role',
+    assignedAt: 'assignedAt',
+} as const;
+
+export type DepartmentMembershipScalarFieldEnum =
+    (typeof DepartmentMembershipScalarFieldEnum)[keyof typeof DepartmentMembershipScalarFieldEnum];
+
 export const SortOrder = {
     asc: 'asc',
     desc: 'desc',
@@ -205,3 +229,20 @@ export const ModuleAccessGroupOrderByRelevanceFieldEnum = {
 
 export type ModuleAccessGroupOrderByRelevanceFieldEnum =
     (typeof ModuleAccessGroupOrderByRelevanceFieldEnum)[keyof typeof ModuleAccessGroupOrderByRelevanceFieldEnum];
+
+export const DepartmentOrderByRelevanceFieldEnum = {
+    id: 'id',
+    name: 'name',
+    description: 'description',
+} as const;
+
+export type DepartmentOrderByRelevanceFieldEnum =
+    (typeof DepartmentOrderByRelevanceFieldEnum)[keyof typeof DepartmentOrderByRelevanceFieldEnum];
+
+export const DepartmentMembershipOrderByRelevanceFieldEnum = {
+    userId: 'userId',
+    departmentId: 'departmentId',
+} as const;
+
+export type DepartmentMembershipOrderByRelevanceFieldEnum =
+    (typeof DepartmentMembershipOrderByRelevanceFieldEnum)[keyof typeof DepartmentMembershipOrderByRelevanceFieldEnum];

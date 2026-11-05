@@ -42,23 +42,29 @@ export function AccessGroupCardActions({
                     </TerminalButton>
                 )}
 
-                <TerminalButton
-                    type="button"
-                    variant="danger"
-                    className="w-auto!"
-                    disabled={isPending || isInUse}
-                    title={
-                        isInUse ? 'Entferne zuerst alle Benutzer- und Modulzuordnungen.' : undefined
-                    }
-                    onClick={onDelete}
-                >
-                    Endgültig löschen
-                </TerminalButton>
+                {!isArchived && (
+                    <TerminalButton
+                        type="button"
+                        variant="danger"
+                        className="w-auto!"
+                        disabled={isPending || isInUse}
+                        title={
+                            isInUse
+                                ? 'Entferne zuerst alle Benutzer- und Modulzuordnungen.'
+                                : undefined
+                        }
+                        onClick={onDelete}
+                    >
+                        Endgültig löschen
+                    </TerminalButton>
+                )}
             </div>
 
-            <TerminalButton type="submit" className="w-auto!" disabled={isPending}>
-                {isPending ? 'Verarbeitung läuft …' : 'Änderungen speichern'}
-            </TerminalButton>
+            {!isArchived && (
+                <TerminalButton type="submit" className="w-auto!" disabled={isPending}>
+                    {isPending ? 'Verarbeitung läuft …' : 'Änderungen speichern'}
+                </TerminalButton>
+            )}
         </div>
     );
 }

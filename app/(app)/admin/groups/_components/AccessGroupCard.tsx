@@ -138,6 +138,7 @@ export function AccessGroupCard({ group }: AccessGroupCardProps) {
                             name={name}
                             description={description}
                             isPending={isPending}
+                            isArchived={isArchived}
                             onNameChange={setName}
                             onDescriptionChange={setDescription}
                         />
