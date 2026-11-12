@@ -28,20 +28,34 @@ const authProxyHandler = withAuth(
             return NextResponse.next();
         }
 
-        // 3. SCHUTZ-LOGIK: User ist PENDING oder VERIFIED
-        if (userStatus === 'PENDING' || userStatus === 'VERIFIED') {
+        // 3. SCHUTZ-LOGIK: Nur PENDING-User müssen warten
+        if (userStatus === 'PENDING') {
             if (pathname !== '/waiting') {
                 return NextResponse.redirect(new URL('/waiting', req.url));
             }
             return NextResponse.next();
         }
 
-        // 4. SCHUTZ-LOGIK: Wenn ein ACTIVE-User versucht, auf /waiting zuzugreifen
+        // 4. VERIFIED-GUEST: Dashboard und App-Zugriff erlauben,
+        // aber Admin-Routen bleiben gesperrt.
+        if (userStatus === 'VERIFIED' && userRole === 'GUEST') {
+            if (pathname === '/waiting') {
+                return NextResponse.redirect(new URL('/dashboard', req.url));
+            }
+
+            if (pathname.startsWith('/admin')) {
+                return NextResponse.redirect(new URL('/dashboard', req.url));
+            }
+
+            return NextResponse.next();
+        }
+
+        // 5. SCHUTZ-LOGIK: Wenn ein ACTIVE-User versucht, auf /waiting zuzugreifen
         if (userStatus === 'ACTIVE' && pathname === '/waiting') {
             return NextResponse.redirect(new URL('/dashboard', req.url));
         }
 
-        // 5. ADMIN-ROUTEN-SCHUTZ: Nur User mit Role.ADMIN dürfen auf /admin zugreifen
+        // 6. ADMIN-ROUTEN-SCHUTZ: Nur User mit Role.ADMIN dürfen auf /admin zugreifen
         if (pathname.startsWith('/admin')) {
             if (userRole !== 'ADMIN') {
                 return NextResponse.redirect(new URL('/dashboard', req.url));
