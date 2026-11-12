@@ -28,6 +28,16 @@ enum DepartmentRole {
   MANAGER
 }
 
+enum CalendarEventVisibility {
+  PUBLIC
+  DEPARTMENT
+}
+
+enum CalendarEventStatus {
+  SCHEDULED
+  CANCELLED
+}
+
 model User {
   id                 String     @id @default(uuid())
   sc_handle          String     @unique
@@ -43,6 +53,7 @@ model User {
 
   accessGroups          UserAccessGroup[]
   departmentMemberships DepartmentMembership[]
+  createdCalendarEvents CalendarEvent[]        @relation("CalendarEventCreator")
 
   @@map("users")
 }
@@ -115,11 +126,13 @@ model Department {
   id          String    @id @default(uuid())
   name        String    @db.VarChar(80)
   description String?   @db.Text
+  color       String    @default("#64748B") @db.VarChar(7)
   archivedAt  DateTime?
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 
   memberships DepartmentMembership[]
+  events      CalendarEvent[]
 
   @@map("departments")
 }
@@ -136,4 +149,37 @@ model DepartmentMembership {
   @@id([userId, departmentId])
   @@index([departmentId])
   @@map("department_memberships")
+}
+
+model CalendarEvent {
+  id          String                  @id @default(uuid())
+  title       String                  @db.VarChar(100)
+  description String?                 @db.VarChar(5000)
+  visibility  CalendarEventVisibility @default(PUBLIC)
+  status      CalendarEventStatus     @default(SCHEDULED)
+
+  isAllDay Boolean @default(false)
+
+  startAt DateTime? @db.DateTime(3)
+  endAt   DateTime? @db.DateTime(3)
+
+  startDate DateTime? @db.Date
+  endDate   DateTime? @db.Date
+
+  location    String? @db.VarChar(150)
+  externalUrl String? @db.VarChar(2048)
+
+  departmentId String
+  createdById  String
+
+  department Department @relation(fields: [departmentId], references: [id], onDelete: Cascade)
+  createdBy  User       @relation("CalendarEventCreator", fields: [createdById], references: [id], onDelete: Restrict)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([departmentId, startAt])
+  @@index([departmentId, startDate])
+  @@index([createdById])
+  @@map("calendar_events")
 }
