@@ -25,8 +25,21 @@ import { UserStatus } from '@/lib/generated/browser';
 import { searchAvailableDepartmentMembers } from '@/lib/departments/departmentMembershipService';
 import { hasDepartmentManagementAccess } from '@/lib/departments/departmentPermissions';
 
+type DepartmentMemberSearchResult =
+    | {
+          success: true;
+          message: string;
+          users: Awaited<ReturnType<typeof searchAvailableDepartmentMembers>>;
+      }
+    | {
+          success: false;
+          message: string;
+          users: [];
+      };
+
 function revalidateDepartmentRoutes() {
     revalidatePath('/admin/departments');
+    revalidatePath('/department-area');
 }
 
 export async function createDepartment(
@@ -237,9 +250,10 @@ export async function restoreDepartment(departmentId: string): Promise<Departmen
     }
 }
 
-export async function searchDepartmentMembers(input: { departmentId: string; query: string }) {
-    await requireAdminSession();
-
+export async function searchDepartmentMembers(input: {
+    departmentId: string;
+    query: string;
+}): Promise<DepartmentMemberSearchResult> {
     const validation = searchDepartmentMembersSchema.safeParse(input);
 
     if (!validation.success) {
@@ -256,6 +270,7 @@ export async function searchDepartmentMembers(input: { departmentId: string; que
         return {
             success: false,
             message: 'Keine Berechtigung für diese Abteilung oder Abteilung nicht verfügbar.',
+            users: [],
         };
     }
 

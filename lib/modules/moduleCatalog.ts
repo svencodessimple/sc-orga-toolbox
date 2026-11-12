@@ -127,6 +127,24 @@ export const moduleDefinitions = [
             allowedGroups: false,
         },
     },
+    {
+        id: 'department-area',
+        defaultTitle: 'Abteilungsbereich',
+        defaultDescription: 'Abteilungen, Mitglieder und Zuständigkeiten verwalten.',
+        defaultSortOrder: 200,
+        href: '/department-area',
+        category: 'module',
+        defaultAllowedRoles: [Role.MEMBER, Role.ADMIN],
+        mandatoryRoles: [],
+        configuration: {
+            title: true,
+            description: true,
+            enabled: true,
+            sortOrder: true,
+            allowedRoles: true,
+            allowedGroups: true,
+        },
+    },
 ] satisfies readonly ModuleDefinition[];
 
 export function getModuleDefinition(moduleId: string): ModuleDefinition | undefined {
