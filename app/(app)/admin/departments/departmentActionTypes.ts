@@ -7,6 +7,7 @@ export interface UpdateDepartmentInput {
     departmentId: string;
     name: string;
     description?: string | null;
+    color: string;
 }
 
 export interface DepartmentActionResult {

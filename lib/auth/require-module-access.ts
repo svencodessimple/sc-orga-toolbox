@@ -2,10 +2,10 @@ import { redirect } from 'next/navigation';
 
 import { canUserAccessModule } from '@/lib/modules/moduleConfigurationService';
 
-import { requireActiveSession } from './require-session';
+import { requireAppSession } from './require-session';
 
 export async function requireModuleAccess(moduleId: string) {
-    const session = await requireActiveSession();
+    const session = await requireAppSession();
 
     const hasAccess = await canUserAccessModule({
         moduleId,

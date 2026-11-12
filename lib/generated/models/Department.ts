@@ -27,6 +27,7 @@ export type DepartmentMinAggregateOutputType = {
     id: string | null;
     name: string | null;
     description: string | null;
+    color: string | null;
     archivedAt: Date | null;
     createdAt: Date | null;
     updatedAt: Date | null;
@@ -36,6 +37,7 @@ export type DepartmentMaxAggregateOutputType = {
     id: string | null;
     name: string | null;
     description: string | null;
+    color: string | null;
     archivedAt: Date | null;
     createdAt: Date | null;
     updatedAt: Date | null;
@@ -45,6 +47,7 @@ export type DepartmentCountAggregateOutputType = {
     id: number;
     name: number;
     description: number;
+    color: number;
     archivedAt: number;
     createdAt: number;
     updatedAt: number;
@@ -55,6 +58,7 @@ export type DepartmentMinAggregateInputType = {
     id?: true;
     name?: true;
     description?: true;
+    color?: true;
     archivedAt?: true;
     createdAt?: true;
     updatedAt?: true;
@@ -64,6 +68,7 @@ export type DepartmentMaxAggregateInputType = {
     id?: true;
     name?: true;
     description?: true;
+    color?: true;
     archivedAt?: true;
     createdAt?: true;
     updatedAt?: true;
@@ -73,6 +78,7 @@ export type DepartmentCountAggregateInputType = {
     id?: true;
     name?: true;
     description?: true;
+    color?: true;
     archivedAt?: true;
     createdAt?: true;
     updatedAt?: true;
@@ -159,6 +165,7 @@ export type DepartmentGroupByOutputType = {
     id: string;
     name: string;
     description: string | null;
+    color: string;
     archivedAt: Date | null;
     createdAt: Date;
     updatedAt: Date;
@@ -186,20 +193,24 @@ export type DepartmentWhereInput = {
     id?: Prisma.StringFilter<'Department'> | string;
     name?: Prisma.StringFilter<'Department'> | string;
     description?: Prisma.StringNullableFilter<'Department'> | string | null;
+    color?: Prisma.StringFilter<'Department'> | string;
     archivedAt?: Prisma.DateTimeNullableFilter<'Department'> | Date | string | null;
     createdAt?: Prisma.DateTimeFilter<'Department'> | Date | string;
     updatedAt?: Prisma.DateTimeFilter<'Department'> | Date | string;
     memberships?: Prisma.DepartmentMembershipListRelationFilter;
+    events?: Prisma.CalendarEventListRelationFilter;
 };
 
 export type DepartmentOrderByWithRelationInput = {
     id?: Prisma.SortOrder;
     name?: Prisma.SortOrder;
     description?: Prisma.SortOrderInput | Prisma.SortOrder;
+    color?: Prisma.SortOrder;
     archivedAt?: Prisma.SortOrderInput | Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
     memberships?: Prisma.DepartmentMembershipOrderByRelationAggregateInput;
+    events?: Prisma.CalendarEventOrderByRelationAggregateInput;
     _relevance?: Prisma.DepartmentOrderByRelevanceInput;
 };
 
@@ -211,10 +222,12 @@ export type DepartmentWhereUniqueInput = Prisma.AtLeast<
         NOT?: Prisma.DepartmentWhereInput | Prisma.DepartmentWhereInput[];
         name?: Prisma.StringFilter<'Department'> | string;
         description?: Prisma.StringNullableFilter<'Department'> | string | null;
+        color?: Prisma.StringFilter<'Department'> | string;
         archivedAt?: Prisma.DateTimeNullableFilter<'Department'> | Date | string | null;
         createdAt?: Prisma.DateTimeFilter<'Department'> | Date | string;
         updatedAt?: Prisma.DateTimeFilter<'Department'> | Date | string;
         memberships?: Prisma.DepartmentMembershipListRelationFilter;
+        events?: Prisma.CalendarEventListRelationFilter;
     },
     'id'
 >;
@@ -223,6 +236,7 @@ export type DepartmentOrderByWithAggregationInput = {
     id?: Prisma.SortOrder;
     name?: Prisma.SortOrder;
     description?: Prisma.SortOrderInput | Prisma.SortOrder;
+    color?: Prisma.SortOrder;
     archivedAt?: Prisma.SortOrderInput | Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
@@ -242,6 +256,7 @@ export type DepartmentScalarWhereWithAggregatesInput = {
     id?: Prisma.StringWithAggregatesFilter<'Department'> | string;
     name?: Prisma.StringWithAggregatesFilter<'Department'> | string;
     description?: Prisma.StringNullableWithAggregatesFilter<'Department'> | string | null;
+    color?: Prisma.StringWithAggregatesFilter<'Department'> | string;
     archivedAt?: Prisma.DateTimeNullableWithAggregatesFilter<'Department'> | Date | string | null;
     createdAt?: Prisma.DateTimeWithAggregatesFilter<'Department'> | Date | string;
     updatedAt?: Prisma.DateTimeWithAggregatesFilter<'Department'> | Date | string;
@@ -251,46 +266,55 @@ export type DepartmentCreateInput = {
     id?: string;
     name: string;
     description?: string | null;
+    color?: string;
     archivedAt?: Date | string | null;
     createdAt?: Date | string;
     updatedAt?: Date | string;
     memberships?: Prisma.DepartmentMembershipCreateNestedManyWithoutDepartmentInput;
+    events?: Prisma.CalendarEventCreateNestedManyWithoutDepartmentInput;
 };
 
 export type DepartmentUncheckedCreateInput = {
     id?: string;
     name: string;
     description?: string | null;
+    color?: string;
     archivedAt?: Date | string | null;
     createdAt?: Date | string;
     updatedAt?: Date | string;
     memberships?: Prisma.DepartmentMembershipUncheckedCreateNestedManyWithoutDepartmentInput;
+    events?: Prisma.CalendarEventUncheckedCreateNestedManyWithoutDepartmentInput;
 };
 
 export type DepartmentUpdateInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     name?: Prisma.StringFieldUpdateOperationsInput | string;
     description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    color?: Prisma.StringFieldUpdateOperationsInput | string;
     archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     memberships?: Prisma.DepartmentMembershipUpdateManyWithoutDepartmentNestedInput;
+    events?: Prisma.CalendarEventUpdateManyWithoutDepartmentNestedInput;
 };
 
 export type DepartmentUncheckedUpdateInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     name?: Prisma.StringFieldUpdateOperationsInput | string;
     description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    color?: Prisma.StringFieldUpdateOperationsInput | string;
     archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     memberships?: Prisma.DepartmentMembershipUncheckedUpdateManyWithoutDepartmentNestedInput;
+    events?: Prisma.CalendarEventUncheckedUpdateManyWithoutDepartmentNestedInput;
 };
 
 export type DepartmentCreateManyInput = {
     id?: string;
     name: string;
     description?: string | null;
+    color?: string;
     archivedAt?: Date | string | null;
     createdAt?: Date | string;
     updatedAt?: Date | string;
@@ -300,6 +324,7 @@ export type DepartmentUpdateManyMutationInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     name?: Prisma.StringFieldUpdateOperationsInput | string;
     description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    color?: Prisma.StringFieldUpdateOperationsInput | string;
     archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
@@ -309,6 +334,7 @@ export type DepartmentUncheckedUpdateManyInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     name?: Prisma.StringFieldUpdateOperationsInput | string;
     description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    color?: Prisma.StringFieldUpdateOperationsInput | string;
     archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
@@ -325,6 +351,7 @@ export type DepartmentCountOrderByAggregateInput = {
     id?: Prisma.SortOrder;
     name?: Prisma.SortOrder;
     description?: Prisma.SortOrder;
+    color?: Prisma.SortOrder;
     archivedAt?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
@@ -334,6 +361,7 @@ export type DepartmentMaxOrderByAggregateInput = {
     id?: Prisma.SortOrder;
     name?: Prisma.SortOrder;
     description?: Prisma.SortOrder;
+    color?: Prisma.SortOrder;
     archivedAt?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
@@ -343,6 +371,7 @@ export type DepartmentMinOrderByAggregateInput = {
     id?: Prisma.SortOrder;
     name?: Prisma.SortOrder;
     description?: Prisma.SortOrder;
+    color?: Prisma.SortOrder;
     archivedAt?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
@@ -379,22 +408,52 @@ export type DepartmentUpdateOneRequiredWithoutMembershipsNestedInput = {
     >;
 };
 
+export type DepartmentCreateNestedOneWithoutEventsInput = {
+    create?: Prisma.XOR<
+        Prisma.DepartmentCreateWithoutEventsInput,
+        Prisma.DepartmentUncheckedCreateWithoutEventsInput
+    >;
+    connectOrCreate?: Prisma.DepartmentCreateOrConnectWithoutEventsInput;
+    connect?: Prisma.DepartmentWhereUniqueInput;
+};
+
+export type DepartmentUpdateOneRequiredWithoutEventsNestedInput = {
+    create?: Prisma.XOR<
+        Prisma.DepartmentCreateWithoutEventsInput,
+        Prisma.DepartmentUncheckedCreateWithoutEventsInput
+    >;
+    connectOrCreate?: Prisma.DepartmentCreateOrConnectWithoutEventsInput;
+    upsert?: Prisma.DepartmentUpsertWithoutEventsInput;
+    connect?: Prisma.DepartmentWhereUniqueInput;
+    update?: Prisma.XOR<
+        Prisma.XOR<
+            Prisma.DepartmentUpdateToOneWithWhereWithoutEventsInput,
+            Prisma.DepartmentUpdateWithoutEventsInput
+        >,
+        Prisma.DepartmentUncheckedUpdateWithoutEventsInput
+    >;
+};
+
 export type DepartmentCreateWithoutMembershipsInput = {
     id?: string;
     name: string;
     description?: string | null;
+    color?: string;
     archivedAt?: Date | string | null;
     createdAt?: Date | string;
     updatedAt?: Date | string;
+    events?: Prisma.CalendarEventCreateNestedManyWithoutDepartmentInput;
 };
 
 export type DepartmentUncheckedCreateWithoutMembershipsInput = {
     id?: string;
     name: string;
     description?: string | null;
+    color?: string;
     archivedAt?: Date | string | null;
     createdAt?: Date | string;
     updatedAt?: Date | string;
+    events?: Prisma.CalendarEventUncheckedCreateNestedManyWithoutDepartmentInput;
 };
 
 export type DepartmentCreateOrConnectWithoutMembershipsInput = {
@@ -429,18 +488,94 @@ export type DepartmentUpdateWithoutMembershipsInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     name?: Prisma.StringFieldUpdateOperationsInput | string;
     description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    color?: Prisma.StringFieldUpdateOperationsInput | string;
     archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    events?: Prisma.CalendarEventUpdateManyWithoutDepartmentNestedInput;
 };
 
 export type DepartmentUncheckedUpdateWithoutMembershipsInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     name?: Prisma.StringFieldUpdateOperationsInput | string;
     description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    color?: Prisma.StringFieldUpdateOperationsInput | string;
     archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    events?: Prisma.CalendarEventUncheckedUpdateManyWithoutDepartmentNestedInput;
+};
+
+export type DepartmentCreateWithoutEventsInput = {
+    id?: string;
+    name: string;
+    description?: string | null;
+    color?: string;
+    archivedAt?: Date | string | null;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    memberships?: Prisma.DepartmentMembershipCreateNestedManyWithoutDepartmentInput;
+};
+
+export type DepartmentUncheckedCreateWithoutEventsInput = {
+    id?: string;
+    name: string;
+    description?: string | null;
+    color?: string;
+    archivedAt?: Date | string | null;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    memberships?: Prisma.DepartmentMembershipUncheckedCreateNestedManyWithoutDepartmentInput;
+};
+
+export type DepartmentCreateOrConnectWithoutEventsInput = {
+    where: Prisma.DepartmentWhereUniqueInput;
+    create: Prisma.XOR<
+        Prisma.DepartmentCreateWithoutEventsInput,
+        Prisma.DepartmentUncheckedCreateWithoutEventsInput
+    >;
+};
+
+export type DepartmentUpsertWithoutEventsInput = {
+    update: Prisma.XOR<
+        Prisma.DepartmentUpdateWithoutEventsInput,
+        Prisma.DepartmentUncheckedUpdateWithoutEventsInput
+    >;
+    create: Prisma.XOR<
+        Prisma.DepartmentCreateWithoutEventsInput,
+        Prisma.DepartmentUncheckedCreateWithoutEventsInput
+    >;
+    where?: Prisma.DepartmentWhereInput;
+};
+
+export type DepartmentUpdateToOneWithWhereWithoutEventsInput = {
+    where?: Prisma.DepartmentWhereInput;
+    data: Prisma.XOR<
+        Prisma.DepartmentUpdateWithoutEventsInput,
+        Prisma.DepartmentUncheckedUpdateWithoutEventsInput
+    >;
+};
+
+export type DepartmentUpdateWithoutEventsInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    color?: Prisma.StringFieldUpdateOperationsInput | string;
+    archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    memberships?: Prisma.DepartmentMembershipUpdateManyWithoutDepartmentNestedInput;
+};
+
+export type DepartmentUncheckedUpdateWithoutEventsInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    color?: Prisma.StringFieldUpdateOperationsInput | string;
+    archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    memberships?: Prisma.DepartmentMembershipUncheckedUpdateManyWithoutDepartmentNestedInput;
 };
 
 /**
@@ -449,12 +584,14 @@ export type DepartmentUncheckedUpdateWithoutMembershipsInput = {
 
 export type DepartmentCountOutputType = {
     memberships: number;
+    events: number;
 };
 
 export type DepartmentCountOutputTypeSelect<
     ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
 > = {
     memberships?: boolean | DepartmentCountOutputTypeCountMembershipsArgs;
+    events?: boolean | DepartmentCountOutputTypeCountEventsArgs;
 };
 
 /**
@@ -478,6 +615,15 @@ export type DepartmentCountOutputTypeCountMembershipsArgs<
     where?: Prisma.DepartmentMembershipWhereInput;
 };
 
+/**
+ * DepartmentCountOutputType without action
+ */
+export type DepartmentCountOutputTypeCountEventsArgs<
+    ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
+> = {
+    where?: Prisma.CalendarEventWhereInput;
+};
+
 export type DepartmentSelect<
     ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
 > = runtime.Types.Extensions.GetSelect<
@@ -485,10 +631,12 @@ export type DepartmentSelect<
         id?: boolean;
         name?: boolean;
         description?: boolean;
+        color?: boolean;
         archivedAt?: boolean;
         createdAt?: boolean;
         updatedAt?: boolean;
         memberships?: boolean | Prisma.Department$membershipsArgs<ExtArgs>;
+        events?: boolean | Prisma.Department$eventsArgs<ExtArgs>;
         _count?: boolean | Prisma.DepartmentCountOutputTypeDefaultArgs<ExtArgs>;
     },
     ExtArgs['result']['department']
@@ -498,6 +646,7 @@ export type DepartmentSelectScalar = {
     id?: boolean;
     name?: boolean;
     description?: boolean;
+    color?: boolean;
     archivedAt?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
@@ -506,13 +655,14 @@ export type DepartmentSelectScalar = {
 export type DepartmentOmit<
     ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
 > = runtime.Types.Extensions.GetOmit<
-    'id' | 'name' | 'description' | 'archivedAt' | 'createdAt' | 'updatedAt',
+    'id' | 'name' | 'description' | 'color' | 'archivedAt' | 'createdAt' | 'updatedAt',
     ExtArgs['result']['department']
 >;
 export type DepartmentInclude<
     ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
 > = {
     memberships?: boolean | Prisma.Department$membershipsArgs<ExtArgs>;
+    events?: boolean | Prisma.Department$eventsArgs<ExtArgs>;
     _count?: boolean | Prisma.DepartmentCountOutputTypeDefaultArgs<ExtArgs>;
 };
 
@@ -522,12 +672,14 @@ export type $DepartmentPayload<
     name: 'Department';
     objects: {
         memberships: Prisma.$DepartmentMembershipPayload<ExtArgs>[];
+        events: Prisma.$CalendarEventPayload<ExtArgs>[];
     };
     scalars: runtime.Types.Extensions.GetPayloadResult<
         {
             id: string;
             name: string;
             description: string | null;
+            color: string;
             archivedAt: Date | null;
             createdAt: Date;
             updatedAt: Date;
@@ -1008,6 +1160,17 @@ export interface Prisma__DepartmentClient<
           >
         | Null
     >;
+    events<T extends Prisma.Department$eventsArgs<ExtArgs> = {}>(
+        args?: Prisma.Subset<T, Prisma.Department$eventsArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<
+        | runtime.Types.Result.GetResult<
+              Prisma.$CalendarEventPayload<ExtArgs>,
+              T,
+              'findMany',
+              GlobalOmitOptions
+          >
+        | Null
+    >;
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1042,6 +1205,7 @@ export interface DepartmentFieldRefs {
     readonly id: Prisma.FieldRef<'Department', 'String'>;
     readonly name: Prisma.FieldRef<'Department', 'String'>;
     readonly description: Prisma.FieldRef<'Department', 'String'>;
+    readonly color: Prisma.FieldRef<'Department', 'String'>;
     readonly archivedAt: Prisma.FieldRef<'Department', 'DateTime'>;
     readonly createdAt: Prisma.FieldRef<'Department', 'DateTime'>;
     readonly updatedAt: Prisma.FieldRef<'Department', 'DateTime'>;
@@ -1448,6 +1612,34 @@ export type Department$membershipsArgs<
     skip?: number;
     distinct?:
         Prisma.DepartmentMembershipScalarFieldEnum | Prisma.DepartmentMembershipScalarFieldEnum[];
+};
+
+/**
+ * Department.events
+ */
+export type Department$eventsArgs<
+    ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
+> = {
+    /**
+     * Select specific fields to fetch from the CalendarEvent
+     */
+    select?: Prisma.CalendarEventSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the CalendarEvent
+     */
+    omit?: Prisma.CalendarEventOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.CalendarEventInclude<ExtArgs> | null;
+    where?: Prisma.CalendarEventWhereInput;
+    orderBy?:
+        | Prisma.CalendarEventOrderByWithRelationInput
+        | Prisma.CalendarEventOrderByWithRelationInput[];
+    cursor?: Prisma.CalendarEventWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.CalendarEventScalarFieldEnum | Prisma.CalendarEventScalarFieldEnum[];
 };
 
 /**

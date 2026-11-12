@@ -31,8 +31,9 @@ export function DepartmentCardHeader({ department }: DepartmentCardHeaderProps) 
                 </p>
             </div>
 
-            <div className="font-mono text-xs uppercase tracking-[0.08em] text-text-dim">
+            <div className="flex gap-4 font-mono text-xs uppercase tracking-[0.08em] text-text-dim">
                 <span>{department.memberCount} Mitglieder</span>
+                <span>{department.eventCount} Termine</span>
             </div>
         </summary>
     );

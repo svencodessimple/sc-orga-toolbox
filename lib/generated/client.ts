@@ -84,3 +84,8 @@ export type Department = Prisma.DepartmentModel;
  *
  */
 export type DepartmentMembership = Prisma.DepartmentMembershipModel;
+/**
+ * Model CalendarEvent
+ *
+ */
+export type CalendarEvent = Prisma.CalendarEventModel;

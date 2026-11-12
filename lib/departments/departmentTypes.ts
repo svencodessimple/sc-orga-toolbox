@@ -14,4 +14,6 @@ export interface DepartmentViewModel {
     updatedAt: Date;
     memberCount: number;
     members: DepartmentMemberViewModel[];
+    color: string;
+    eventCount: number;
 }

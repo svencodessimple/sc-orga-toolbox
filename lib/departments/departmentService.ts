@@ -26,7 +26,10 @@ export async function getDepartments(
                 },
             },
             _count: {
-                select: { memberships: true },
+                select: {
+                    memberships: true,
+                    events: true,
+                },
             },
         },
         orderBy: { name: 'asc' },
@@ -40,6 +43,8 @@ export async function getDepartments(
         createdAt: department.createdAt,
         updatedAt: department.updatedAt,
         memberCount: department._count.memberships,
+        color: department.color,
+        eventCount: department._count.events,
         members: department.memberships
             .map((membership) => ({
                 userId: membership.userId,
@@ -86,7 +91,10 @@ export async function getDepartmentsForUser(
                 },
             },
             _count: {
-                select: { memberships: true },
+                select: {
+                    memberships: true,
+                    events: true,
+                },
             },
         },
         orderBy: { name: 'asc' },
@@ -100,6 +108,8 @@ export async function getDepartmentsForUser(
         createdAt: department.createdAt,
         updatedAt: department.updatedAt,
         memberCount: department._count.memberships,
+        color: department.color,
+        eventCount: department._count.events,
         members: department.memberships
             .map((membership) => ({
                 userId: membership.userId,
