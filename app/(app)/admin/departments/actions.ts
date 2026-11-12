@@ -250,6 +250,51 @@ export async function restoreDepartment(departmentId: string): Promise<Departmen
     }
 }
 
+export async function deleteDepartment(departmentId: string): Promise<DepartmentActionResult> {
+    await requireAdminSession();
+
+    const validationResult = departmentIdSchema.safeParse(departmentId);
+
+    if (!validationResult.success) {
+        return {
+            success: false,
+            message: validationResult.error.issues[0]?.message ?? 'Die Abteilungs-ID ist ungültig.',
+        };
+    }
+
+    try {
+        const result = await prisma.department.deleteMany({
+            where: {
+                id: validationResult.data,
+                memberships: {
+                    none: {},
+                },
+            },
+        });
+
+        if (result.count === 0) {
+            return {
+                success: false,
+                message: 'Die Abteilung wurde nicht gefunden oder enthält noch Mitglieder.',
+            };
+        }
+
+        revalidateDepartmentRoutes();
+
+        return {
+            success: true,
+            message: 'Abteilung endgültig gelöscht.',
+        };
+    } catch (error) {
+        console.error('Abteilung konnte nicht gelöscht werden.', error);
+
+        return {
+            success: false,
+            message: 'Die Abteilung konnte nicht gelöscht werden.',
+        };
+    }
+}
+
 export async function searchDepartmentMembers(input: {
     departmentId: string;
     query: string;

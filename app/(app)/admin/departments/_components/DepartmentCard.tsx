@@ -8,18 +8,24 @@ import { ConfirmationModal } from '@/app/(app)/admin/_components/ConfirmationMod
 import { TerminalPanel } from '@/components/mobiglas/TerminalPanel';
 import type { DepartmentViewModel } from '@/lib/departments/departmentTypes';
 
-import { archiveDepartment, restoreDepartment, updateDepartment } from '../actions';
+import {
+    archiveDepartment,
+    deleteDepartment,
+    restoreDepartment,
+    updateDepartment,
+} from '../actions';
 import { DepartmentCardActions } from './DepartmentCardActions';
 import { DepartmentCardHeader } from './DepartmentCardHeader';
 import { DepartmentGeneralFields } from './DepartmentGeneralFields';
 import { DepartmentMembershipSection } from './DepartmentMembershipSection';
+import type { DepartmentActionResult } from '../departmentActionTypes';
 
 interface DepartmentCardProps {
     department: DepartmentViewModel;
     isArchived: boolean;
 }
 
-type ConfirmationAction = 'archive' | 'restore';
+type ConfirmationAction = 'archive' | 'restore' | 'delete';
 
 interface ConfirmationConfig {
     title: string;
@@ -48,6 +54,15 @@ function getConfirmationConfig(
                     `Möchtest du die Abteilung „${departmentName}“ wiederherstellen? ` +
                     'Die bestehenden Mitgliedschaften werden dadurch wieder aktiv.',
                 variant: 'primary',
+            };
+
+        case 'delete':
+            return {
+                title: 'Abteilung endgültig löschen',
+                message:
+                    `Möchtest du die Abteilung „${departmentName}“ wirklich endgültig löschen? ` +
+                    'Diese Aktion kann nicht rückgängig gemacht werden.',
+                variant: 'danger',
             };
     }
 }
@@ -96,10 +111,21 @@ export function DepartmentCard({ department, isArchived }: DepartmentCardProps) 
         }
 
         startTransition(async () => {
-            const result =
-                confirmationAction === 'archive'
-                    ? await archiveDepartment(department.id)
-                    : await restoreDepartment(department.id);
+            let result: DepartmentActionResult;
+
+            switch (confirmationAction) {
+                case 'archive':
+                    result = await archiveDepartment(department.id);
+                    break;
+
+                case 'restore':
+                    result = await restoreDepartment(department.id);
+                    break;
+
+                case 'delete':
+                    result = await deleteDepartment(department.id);
+                    break;
+            }
 
             if (showResult(result)) {
                 setConfirmationAction(null);
@@ -132,6 +158,8 @@ export function DepartmentCard({ department, isArchived }: DepartmentCardProps) 
                             isPending={isPending}
                             onArchive={() => setConfirmationAction('archive')}
                             onRestore={() => setConfirmationAction('restore')}
+                            onDelete={() => setConfirmationAction('delete')}
+                            memberCount={department.members.length}
                         />
                     </form>
                 </details>
