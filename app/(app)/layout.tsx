@@ -1,9 +1,9 @@
 import { Footer } from '@/components/Footer';
 import { Header } from '@/components/Header';
-import { requireActiveSession } from '@/lib/auth/require-session';
+import { requireAppSession } from '@/lib/auth/require-session';
 
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
-    const session = await requireActiveSession();
+    const session = await requireAppSession();
 
     return (
         <div className="min-h-screen flex flex-col">

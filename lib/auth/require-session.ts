@@ -31,3 +31,33 @@ export async function requireWaitingSession() {
 
     return session; // status ist hier garantiert 'PENDING' oder 'VERIFIED'
 }
+
+export async function requireAppSession() {
+    const session = await getServerSession(authOptions);
+
+    if (!session) redirect('/login');
+
+    if (session.user.status === 'BANNED') {
+        redirect('/login?error=Banned');
+    }
+
+    if (session.user.status === 'REJECTED') {
+        redirect('/login?error=Rejected');
+    }
+
+    if (session.user.status === 'PENDING') {
+        redirect('/waiting');
+    }
+
+    const isVerifiedGuest = session.user.status === 'VERIFIED' && session.user.role === 'GUEST';
+
+    const isActiveMember =
+        session.user.status === 'ACTIVE' &&
+        (session.user.role === 'MEMBER' || session.user.role === 'ADMIN');
+
+    if (!isVerifiedGuest && !isActiveMember) {
+        redirect('/login?error=InvalidAccountState');
+    }
+
+    return session;
+}
