@@ -35,7 +35,8 @@ interface ConfirmationConfig {
 
 function getConfirmationConfig(
     action: ConfirmationAction,
-    departmentName: string
+    departmentName: string,
+    eventCount: number
 ): ConfirmationConfig {
     switch (action) {
         case 'archive':
@@ -61,6 +62,7 @@ function getConfirmationConfig(
                 title: 'Abteilung endgültig löschen',
                 message:
                     `Möchtest du die Abteilung „${departmentName}“ wirklich endgültig löschen? ` +
+                    `Dabei werden auch ${eventCount} Kalendertermine endgültig gelöscht. ` +
                     'Diese Aktion kann nicht rückgängig gemacht werden.',
                 variant: 'danger',
             };
@@ -74,9 +76,10 @@ export function DepartmentCard({ department, isArchived }: DepartmentCardProps) 
     const [name, setName] = useState(department.name);
     const [description, setDescription] = useState(department.description ?? '');
     const [confirmationAction, setConfirmationAction] = useState<ConfirmationAction | null>(null);
+    const [color, setColor] = useState(department.color);
 
     const confirmationConfig = confirmationAction
-        ? getConfirmationConfig(confirmationAction, department.name)
+        ? getConfirmationConfig(confirmationAction, department.name, department.eventCount)
         : null;
 
     function showResult(result: { success: boolean; message: string }) {
@@ -100,6 +103,7 @@ export function DepartmentCard({ department, isArchived }: DepartmentCardProps) 
                     departmentId: department.id,
                     name,
                     description,
+                    color,
                 })
             );
         });
@@ -149,6 +153,8 @@ export function DepartmentCard({ department, isArchived }: DepartmentCardProps) 
                             isPending={isPending || isArchived}
                             onNameChange={setName}
                             onDescriptionChange={setDescription}
+                            color={color}
+                            onColorChange={setColor}
                         />
 
                         <DepartmentMembershipSection members={department.members} />

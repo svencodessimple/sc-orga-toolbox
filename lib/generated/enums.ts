@@ -32,3 +32,18 @@ export const DepartmentRole = {
 } as const;
 
 export type DepartmentRole = (typeof DepartmentRole)[keyof typeof DepartmentRole];
+
+export const CalendarEventVisibility = {
+    PUBLIC: 'PUBLIC',
+    DEPARTMENT: 'DEPARTMENT',
+} as const;
+
+export type CalendarEventVisibility =
+    (typeof CalendarEventVisibility)[keyof typeof CalendarEventVisibility];
+
+export const CalendarEventStatus = {
+    SCHEDULED: 'SCHEDULED',
+    CANCELLED: 'CANCELLED',
+} as const;
+
+export type CalendarEventStatus = (typeof CalendarEventStatus)[keyof typeof CalendarEventStatus];

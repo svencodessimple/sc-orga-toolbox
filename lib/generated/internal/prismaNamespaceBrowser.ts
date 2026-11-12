@@ -56,6 +56,7 @@ export const ModelName = {
     ModuleAccessGroup: 'ModuleAccessGroup',
     Department: 'Department',
     DepartmentMembership: 'DepartmentMembership',
+    CalendarEvent: 'CalendarEvent',
 } as const;
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName];
@@ -146,6 +147,7 @@ export const DepartmentScalarFieldEnum = {
     id: 'id',
     name: 'name',
     description: 'description',
+    color: 'color',
     archivedAt: 'archivedAt',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
@@ -163,6 +165,28 @@ export const DepartmentMembershipScalarFieldEnum = {
 
 export type DepartmentMembershipScalarFieldEnum =
     (typeof DepartmentMembershipScalarFieldEnum)[keyof typeof DepartmentMembershipScalarFieldEnum];
+
+export const CalendarEventScalarFieldEnum = {
+    id: 'id',
+    title: 'title',
+    description: 'description',
+    visibility: 'visibility',
+    status: 'status',
+    isAllDay: 'isAllDay',
+    startAt: 'startAt',
+    endAt: 'endAt',
+    startDate: 'startDate',
+    endDate: 'endDate',
+    location: 'location',
+    externalUrl: 'externalUrl',
+    departmentId: 'departmentId',
+    createdById: 'createdById',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+} as const;
+
+export type CalendarEventScalarFieldEnum =
+    (typeof CalendarEventScalarFieldEnum)[keyof typeof CalendarEventScalarFieldEnum];
 
 export const SortOrder = {
     asc: 'asc',
@@ -234,6 +258,7 @@ export const DepartmentOrderByRelevanceFieldEnum = {
     id: 'id',
     name: 'name',
     description: 'description',
+    color: 'color',
 } as const;
 
 export type DepartmentOrderByRelevanceFieldEnum =
@@ -246,3 +271,16 @@ export const DepartmentMembershipOrderByRelevanceFieldEnum = {
 
 export type DepartmentMembershipOrderByRelevanceFieldEnum =
     (typeof DepartmentMembershipOrderByRelevanceFieldEnum)[keyof typeof DepartmentMembershipOrderByRelevanceFieldEnum];
+
+export const CalendarEventOrderByRelevanceFieldEnum = {
+    id: 'id',
+    title: 'title',
+    description: 'description',
+    location: 'location',
+    externalUrl: 'externalUrl',
+    departmentId: 'departmentId',
+    createdById: 'createdById',
+} as const;
+
+export type CalendarEventOrderByRelevanceFieldEnum =
+    (typeof CalendarEventOrderByRelevanceFieldEnum)[keyof typeof CalendarEventOrderByRelevanceFieldEnum];

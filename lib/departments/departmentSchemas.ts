@@ -16,6 +16,10 @@ export const departmentDescriptionSchema = z
     .nullable()
     .transform((value) => (value?.length ? value : null));
 
+export const departmentColorSchema = z
+    .string()
+    .regex(/^#[0-9A-Fa-f]{6}$/, 'Die Abteilungsfarbe ist ungültig.');
+
 export const createDepartmentSchema = z.object({
     name: departmentNameSchema,
     description: departmentDescriptionSchema,
@@ -25,6 +29,7 @@ export const updateDepartmentSchema = z.object({
     departmentId: departmentIdSchema,
     name: departmentNameSchema,
     description: departmentDescriptionSchema,
+    color: departmentColorSchema,
 });
 
 export type CreateDepartmentData = z.infer<typeof createDepartmentSchema>;

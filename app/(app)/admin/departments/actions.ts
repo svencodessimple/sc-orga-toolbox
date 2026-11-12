@@ -24,6 +24,7 @@ import {
 import { UserStatus } from '@/lib/generated/browser';
 import { searchAvailableDepartmentMembers } from '@/lib/departments/departmentMembershipService';
 import { hasDepartmentManagementAccess } from '@/lib/departments/departmentPermissions';
+import { getNextDepartmentColor } from '@/lib/departments/departmentColors';
 
 type DepartmentMemberSearchResult =
     | {
@@ -58,7 +59,10 @@ export async function createDepartment(
 
     try {
         await prisma.department.create({
-            data: validationResult.data,
+            data: {
+                ...validationResult.data,
+                color: await getNextDepartmentColor(prisma),
+            },
         });
 
         revalidateDepartmentRoutes();
@@ -91,7 +95,7 @@ export async function updateDepartment(
         };
     }
 
-    const { departmentId, name, description } = validationResult.data;
+    const { departmentId, name, description, color } = validationResult.data;
 
     try {
         const result = await prisma.department.updateMany({
@@ -102,6 +106,7 @@ export async function updateDepartment(
             data: {
                 name,
                 description,
+                color,
             },
         });
 

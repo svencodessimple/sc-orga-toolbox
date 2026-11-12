@@ -262,6 +262,7 @@ export type UserWhereInput = {
     bannedAt?: Prisma.DateTimeNullableFilter<'User'> | Date | string | null;
     accessGroups?: Prisma.UserAccessGroupListRelationFilter;
     departmentMemberships?: Prisma.DepartmentMembershipListRelationFilter;
+    createdCalendarEvents?: Prisma.CalendarEventListRelationFilter;
 };
 
 export type UserOrderByWithRelationInput = {
@@ -278,6 +279,7 @@ export type UserOrderByWithRelationInput = {
     bannedAt?: Prisma.SortOrderInput | Prisma.SortOrder;
     accessGroups?: Prisma.UserAccessGroupOrderByRelationAggregateInput;
     departmentMemberships?: Prisma.DepartmentMembershipOrderByRelationAggregateInput;
+    createdCalendarEvents?: Prisma.CalendarEventOrderByRelationAggregateInput;
     _relevance?: Prisma.UserOrderByRelevanceInput;
 };
 
@@ -299,6 +301,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<
         bannedAt?: Prisma.DateTimeNullableFilter<'User'> | Date | string | null;
         accessGroups?: Prisma.UserAccessGroupListRelationFilter;
         departmentMemberships?: Prisma.DepartmentMembershipListRelationFilter;
+        createdCalendarEvents?: Prisma.CalendarEventListRelationFilter;
     },
     'id' | 'sc_handle' | 'verification_token'
 >;
@@ -353,6 +356,7 @@ export type UserCreateInput = {
     bannedAt?: Date | string | null;
     accessGroups?: Prisma.UserAccessGroupCreateNestedManyWithoutUserInput;
     departmentMemberships?: Prisma.DepartmentMembershipCreateNestedManyWithoutUserInput;
+    createdCalendarEvents?: Prisma.CalendarEventCreateNestedManyWithoutCreatedByInput;
 };
 
 export type UserUncheckedCreateInput = {
@@ -369,6 +373,7 @@ export type UserUncheckedCreateInput = {
     bannedAt?: Date | string | null;
     accessGroups?: Prisma.UserAccessGroupUncheckedCreateNestedManyWithoutUserInput;
     departmentMemberships?: Prisma.DepartmentMembershipUncheckedCreateNestedManyWithoutUserInput;
+    createdCalendarEvents?: Prisma.CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput;
 };
 
 export type UserUpdateInput = {
@@ -385,6 +390,7 @@ export type UserUpdateInput = {
     bannedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
     accessGroups?: Prisma.UserAccessGroupUpdateManyWithoutUserNestedInput;
     departmentMemberships?: Prisma.DepartmentMembershipUpdateManyWithoutUserNestedInput;
+    createdCalendarEvents?: Prisma.CalendarEventUpdateManyWithoutCreatedByNestedInput;
 };
 
 export type UserUncheckedUpdateInput = {
@@ -401,6 +407,7 @@ export type UserUncheckedUpdateInput = {
     bannedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
     accessGroups?: Prisma.UserAccessGroupUncheckedUpdateManyWithoutUserNestedInput;
     departmentMemberships?: Prisma.DepartmentMembershipUncheckedUpdateManyWithoutUserNestedInput;
+    createdCalendarEvents?: Prisma.CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput;
 };
 
 export type UserCreateManyInput = {
@@ -586,6 +593,32 @@ export type UserUpdateOneRequiredWithoutDepartmentMembershipsNestedInput = {
     >;
 };
 
+export type UserCreateNestedOneWithoutCreatedCalendarEventsInput = {
+    create?: Prisma.XOR<
+        Prisma.UserCreateWithoutCreatedCalendarEventsInput,
+        Prisma.UserUncheckedCreateWithoutCreatedCalendarEventsInput
+    >;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutCreatedCalendarEventsInput;
+    connect?: Prisma.UserWhereUniqueInput;
+};
+
+export type UserUpdateOneRequiredWithoutCreatedCalendarEventsNestedInput = {
+    create?: Prisma.XOR<
+        Prisma.UserCreateWithoutCreatedCalendarEventsInput,
+        Prisma.UserUncheckedCreateWithoutCreatedCalendarEventsInput
+    >;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutCreatedCalendarEventsInput;
+    upsert?: Prisma.UserUpsertWithoutCreatedCalendarEventsInput;
+    connect?: Prisma.UserWhereUniqueInput;
+    update?: Prisma.XOR<
+        Prisma.XOR<
+            Prisma.UserUpdateToOneWithWhereWithoutCreatedCalendarEventsInput,
+            Prisma.UserUpdateWithoutCreatedCalendarEventsInput
+        >,
+        Prisma.UserUncheckedUpdateWithoutCreatedCalendarEventsInput
+    >;
+};
+
 export type UserCreateWithoutAccessGroupsInput = {
     id?: string;
     sc_handle: string;
@@ -599,6 +632,7 @@ export type UserCreateWithoutAccessGroupsInput = {
     rejectedAt?: Date | string | null;
     bannedAt?: Date | string | null;
     departmentMemberships?: Prisma.DepartmentMembershipCreateNestedManyWithoutUserInput;
+    createdCalendarEvents?: Prisma.CalendarEventCreateNestedManyWithoutCreatedByInput;
 };
 
 export type UserUncheckedCreateWithoutAccessGroupsInput = {
@@ -614,6 +648,7 @@ export type UserUncheckedCreateWithoutAccessGroupsInput = {
     rejectedAt?: Date | string | null;
     bannedAt?: Date | string | null;
     departmentMemberships?: Prisma.DepartmentMembershipUncheckedCreateNestedManyWithoutUserInput;
+    createdCalendarEvents?: Prisma.CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput;
 };
 
 export type UserCreateOrConnectWithoutAccessGroupsInput = {
@@ -657,6 +692,7 @@ export type UserUpdateWithoutAccessGroupsInput = {
     rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
     bannedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
     departmentMemberships?: Prisma.DepartmentMembershipUpdateManyWithoutUserNestedInput;
+    createdCalendarEvents?: Prisma.CalendarEventUpdateManyWithoutCreatedByNestedInput;
 };
 
 export type UserUncheckedUpdateWithoutAccessGroupsInput = {
@@ -672,6 +708,7 @@ export type UserUncheckedUpdateWithoutAccessGroupsInput = {
     rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
     bannedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
     departmentMemberships?: Prisma.DepartmentMembershipUncheckedUpdateManyWithoutUserNestedInput;
+    createdCalendarEvents?: Prisma.CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput;
 };
 
 export type UserCreateWithoutDepartmentMembershipsInput = {
@@ -687,6 +724,7 @@ export type UserCreateWithoutDepartmentMembershipsInput = {
     rejectedAt?: Date | string | null;
     bannedAt?: Date | string | null;
     accessGroups?: Prisma.UserAccessGroupCreateNestedManyWithoutUserInput;
+    createdCalendarEvents?: Prisma.CalendarEventCreateNestedManyWithoutCreatedByInput;
 };
 
 export type UserUncheckedCreateWithoutDepartmentMembershipsInput = {
@@ -702,6 +740,7 @@ export type UserUncheckedCreateWithoutDepartmentMembershipsInput = {
     rejectedAt?: Date | string | null;
     bannedAt?: Date | string | null;
     accessGroups?: Prisma.UserAccessGroupUncheckedCreateNestedManyWithoutUserInput;
+    createdCalendarEvents?: Prisma.CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput;
 };
 
 export type UserCreateOrConnectWithoutDepartmentMembershipsInput = {
@@ -745,6 +784,7 @@ export type UserUpdateWithoutDepartmentMembershipsInput = {
     rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
     bannedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
     accessGroups?: Prisma.UserAccessGroupUpdateManyWithoutUserNestedInput;
+    createdCalendarEvents?: Prisma.CalendarEventUpdateManyWithoutCreatedByNestedInput;
 };
 
 export type UserUncheckedUpdateWithoutDepartmentMembershipsInput = {
@@ -760,6 +800,99 @@ export type UserUncheckedUpdateWithoutDepartmentMembershipsInput = {
     rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
     bannedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
     accessGroups?: Prisma.UserAccessGroupUncheckedUpdateManyWithoutUserNestedInput;
+    createdCalendarEvents?: Prisma.CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput;
+};
+
+export type UserCreateWithoutCreatedCalendarEventsInput = {
+    id?: string;
+    sc_handle: string;
+    password: string;
+    status?: $Enums.UserStatus;
+    role?: $Enums.Role;
+    verification_token: string;
+    failed_attempts?: number;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    rejectedAt?: Date | string | null;
+    bannedAt?: Date | string | null;
+    accessGroups?: Prisma.UserAccessGroupCreateNestedManyWithoutUserInput;
+    departmentMemberships?: Prisma.DepartmentMembershipCreateNestedManyWithoutUserInput;
+};
+
+export type UserUncheckedCreateWithoutCreatedCalendarEventsInput = {
+    id?: string;
+    sc_handle: string;
+    password: string;
+    status?: $Enums.UserStatus;
+    role?: $Enums.Role;
+    verification_token: string;
+    failed_attempts?: number;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    rejectedAt?: Date | string | null;
+    bannedAt?: Date | string | null;
+    accessGroups?: Prisma.UserAccessGroupUncheckedCreateNestedManyWithoutUserInput;
+    departmentMemberships?: Prisma.DepartmentMembershipUncheckedCreateNestedManyWithoutUserInput;
+};
+
+export type UserCreateOrConnectWithoutCreatedCalendarEventsInput = {
+    where: Prisma.UserWhereUniqueInput;
+    create: Prisma.XOR<
+        Prisma.UserCreateWithoutCreatedCalendarEventsInput,
+        Prisma.UserUncheckedCreateWithoutCreatedCalendarEventsInput
+    >;
+};
+
+export type UserUpsertWithoutCreatedCalendarEventsInput = {
+    update: Prisma.XOR<
+        Prisma.UserUpdateWithoutCreatedCalendarEventsInput,
+        Prisma.UserUncheckedUpdateWithoutCreatedCalendarEventsInput
+    >;
+    create: Prisma.XOR<
+        Prisma.UserCreateWithoutCreatedCalendarEventsInput,
+        Prisma.UserUncheckedCreateWithoutCreatedCalendarEventsInput
+    >;
+    where?: Prisma.UserWhereInput;
+};
+
+export type UserUpdateToOneWithWhereWithoutCreatedCalendarEventsInput = {
+    where?: Prisma.UserWhereInput;
+    data: Prisma.XOR<
+        Prisma.UserUpdateWithoutCreatedCalendarEventsInput,
+        Prisma.UserUncheckedUpdateWithoutCreatedCalendarEventsInput
+    >;
+};
+
+export type UserUpdateWithoutCreatedCalendarEventsInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    sc_handle?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus;
+    role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role;
+    verification_token?: Prisma.StringFieldUpdateOperationsInput | string;
+    failed_attempts?: Prisma.IntFieldUpdateOperationsInput | number;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    bannedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    accessGroups?: Prisma.UserAccessGroupUpdateManyWithoutUserNestedInput;
+    departmentMemberships?: Prisma.DepartmentMembershipUpdateManyWithoutUserNestedInput;
+};
+
+export type UserUncheckedUpdateWithoutCreatedCalendarEventsInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    sc_handle?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus;
+    role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role;
+    verification_token?: Prisma.StringFieldUpdateOperationsInput | string;
+    failed_attempts?: Prisma.IntFieldUpdateOperationsInput | number;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    bannedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    accessGroups?: Prisma.UserAccessGroupUncheckedUpdateManyWithoutUserNestedInput;
+    departmentMemberships?: Prisma.DepartmentMembershipUncheckedUpdateManyWithoutUserNestedInput;
 };
 
 /**
@@ -769,6 +902,7 @@ export type UserUncheckedUpdateWithoutDepartmentMembershipsInput = {
 export type UserCountOutputType = {
     accessGroups: number;
     departmentMemberships: number;
+    createdCalendarEvents: number;
 };
 
 export type UserCountOutputTypeSelect<
@@ -776,6 +910,7 @@ export type UserCountOutputTypeSelect<
 > = {
     accessGroups?: boolean | UserCountOutputTypeCountAccessGroupsArgs;
     departmentMemberships?: boolean | UserCountOutputTypeCountDepartmentMembershipsArgs;
+    createdCalendarEvents?: boolean | UserCountOutputTypeCountCreatedCalendarEventsArgs;
 };
 
 /**
@@ -808,6 +943,15 @@ export type UserCountOutputTypeCountDepartmentMembershipsArgs<
     where?: Prisma.DepartmentMembershipWhereInput;
 };
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountCreatedCalendarEventsArgs<
+    ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
+> = {
+    where?: Prisma.CalendarEventWhereInput;
+};
+
 export type UserSelect<
     ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
 > = runtime.Types.Extensions.GetSelect<
@@ -825,6 +969,7 @@ export type UserSelect<
         bannedAt?: boolean;
         accessGroups?: boolean | Prisma.User$accessGroupsArgs<ExtArgs>;
         departmentMemberships?: boolean | Prisma.User$departmentMembershipsArgs<ExtArgs>;
+        createdCalendarEvents?: boolean | Prisma.User$createdCalendarEventsArgs<ExtArgs>;
         _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>;
     },
     ExtArgs['result']['user']
@@ -865,6 +1010,7 @@ export type UserInclude<
 > = {
     accessGroups?: boolean | Prisma.User$accessGroupsArgs<ExtArgs>;
     departmentMemberships?: boolean | Prisma.User$departmentMembershipsArgs<ExtArgs>;
+    createdCalendarEvents?: boolean | Prisma.User$createdCalendarEventsArgs<ExtArgs>;
     _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>;
 };
 
@@ -875,6 +1021,7 @@ export type $UserPayload<
     objects: {
         accessGroups: Prisma.$UserAccessGroupPayload<ExtArgs>[];
         departmentMemberships: Prisma.$DepartmentMembershipPayload<ExtArgs>[];
+        createdCalendarEvents: Prisma.$CalendarEventPayload<ExtArgs>[];
     };
     scalars: runtime.Types.Extensions.GetPayloadResult<
         {
@@ -1374,6 +1521,17 @@ export interface Prisma__UserClient<
           >
         | Null
     >;
+    createdCalendarEvents<T extends Prisma.User$createdCalendarEventsArgs<ExtArgs> = {}>(
+        args?: Prisma.Subset<T, Prisma.User$createdCalendarEventsArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<
+        | runtime.Types.Result.GetResult<
+              Prisma.$CalendarEventPayload<ExtArgs>,
+              T,
+              'findMany',
+              GlobalOmitOptions
+          >
+        | Null
+    >;
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1841,6 +1999,34 @@ export type User$departmentMembershipsArgs<
     skip?: number;
     distinct?:
         Prisma.DepartmentMembershipScalarFieldEnum | Prisma.DepartmentMembershipScalarFieldEnum[];
+};
+
+/**
+ * User.createdCalendarEvents
+ */
+export type User$createdCalendarEventsArgs<
+    ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
+> = {
+    /**
+     * Select specific fields to fetch from the CalendarEvent
+     */
+    select?: Prisma.CalendarEventSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the CalendarEvent
+     */
+    omit?: Prisma.CalendarEventOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.CalendarEventInclude<ExtArgs> | null;
+    where?: Prisma.CalendarEventWhereInput;
+    orderBy?:
+        | Prisma.CalendarEventOrderByWithRelationInput
+        | Prisma.CalendarEventOrderByWithRelationInput[];
+    cursor?: Prisma.CalendarEventWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.CalendarEventScalarFieldEnum | Prisma.CalendarEventScalarFieldEnum[];
 };
 
 /**

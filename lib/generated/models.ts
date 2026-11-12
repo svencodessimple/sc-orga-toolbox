@@ -15,4 +15,5 @@ export type * from './models/UserAccessGroup';
 export type * from './models/ModuleAccessGroup';
 export type * from './models/Department';
 export type * from './models/DepartmentMembership';
+export type * from './models/CalendarEvent';
 export type * from './commonInputTypes';
