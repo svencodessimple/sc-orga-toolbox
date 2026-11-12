@@ -25,3 +25,10 @@ export const Role = {
 } as const;
 
 export type Role = (typeof Role)[keyof typeof Role];
+
+export const DepartmentRole = {
+    MEMBER: 'MEMBER',
+    MANAGER: 'MANAGER',
+} as const;
+
+export type DepartmentRole = (typeof DepartmentRole)[keyof typeof DepartmentRole];

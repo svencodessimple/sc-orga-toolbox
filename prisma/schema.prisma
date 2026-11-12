@@ -23,6 +23,11 @@ enum Role {
   ADMIN
 }
 
+enum DepartmentRole {
+  MEMBER
+  MANAGER
+}
+
 model User {
   id                 String     @id @default(uuid())
   sc_handle          String     @unique
@@ -36,7 +41,8 @@ model User {
   rejectedAt         DateTime?
   bannedAt           DateTime?
 
-  accessGroups UserAccessGroup[]
+  accessGroups          UserAccessGroup[]
+  departmentMemberships DepartmentMembership[]
 
   @@map("users")
 }
@@ -103,4 +109,31 @@ model ModuleAccessGroup {
   @@id([moduleId, groupId])
   @@index([groupId])
   @@map("module_access_groups")
+}
+
+model Department {
+  id          String    @id @default(uuid())
+  name        String    @db.VarChar(80)
+  description String?   @db.Text
+  archivedAt  DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  memberships DepartmentMembership[]
+
+  @@map("departments")
+}
+
+model DepartmentMembership {
+  userId       String
+  departmentId String
+  role         DepartmentRole @default(MEMBER)
+  assignedAt   DateTime       @default(now())
+
+  user       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  department Department @relation(fields: [departmentId], references: [id], onDelete: Restrict)
+
+  @@id([userId, departmentId])
+  @@index([departmentId])
+  @@map("department_memberships")
 }

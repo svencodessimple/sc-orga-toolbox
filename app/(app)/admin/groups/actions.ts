@@ -93,6 +93,7 @@ export async function updateAccessGroup(
         const result = await prisma.accessGroup.updateMany({
             where: {
                 id: groupId,
+                archivedAt: null,
             },
             data: {
                 name,
@@ -103,7 +104,7 @@ export async function updateAccessGroup(
         if (result.count === 0) {
             return {
                 success: false,
-                message: 'Die angegebene Zugriffsgruppe wurde nicht gefunden.',
+                message: 'Die Zugriffsgruppe wurde nicht gefunden oder ist archiviert.',
             };
         }
 

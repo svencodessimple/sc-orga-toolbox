@@ -261,6 +261,7 @@ export type UserWhereInput = {
     rejectedAt?: Prisma.DateTimeNullableFilter<'User'> | Date | string | null;
     bannedAt?: Prisma.DateTimeNullableFilter<'User'> | Date | string | null;
     accessGroups?: Prisma.UserAccessGroupListRelationFilter;
+    departmentMemberships?: Prisma.DepartmentMembershipListRelationFilter;
 };
 
 export type UserOrderByWithRelationInput = {
@@ -276,6 +277,7 @@ export type UserOrderByWithRelationInput = {
     rejectedAt?: Prisma.SortOrderInput | Prisma.SortOrder;
     bannedAt?: Prisma.SortOrderInput | Prisma.SortOrder;
     accessGroups?: Prisma.UserAccessGroupOrderByRelationAggregateInput;
+    departmentMemberships?: Prisma.DepartmentMembershipOrderByRelationAggregateInput;
     _relevance?: Prisma.UserOrderByRelevanceInput;
 };
 
@@ -296,6 +298,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<
         rejectedAt?: Prisma.DateTimeNullableFilter<'User'> | Date | string | null;
         bannedAt?: Prisma.DateTimeNullableFilter<'User'> | Date | string | null;
         accessGroups?: Prisma.UserAccessGroupListRelationFilter;
+        departmentMemberships?: Prisma.DepartmentMembershipListRelationFilter;
     },
     'id' | 'sc_handle' | 'verification_token'
 >;
@@ -349,6 +352,7 @@ export type UserCreateInput = {
     rejectedAt?: Date | string | null;
     bannedAt?: Date | string | null;
     accessGroups?: Prisma.UserAccessGroupCreateNestedManyWithoutUserInput;
+    departmentMemberships?: Prisma.DepartmentMembershipCreateNestedManyWithoutUserInput;
 };
 
 export type UserUncheckedCreateInput = {
@@ -364,6 +368,7 @@ export type UserUncheckedCreateInput = {
     rejectedAt?: Date | string | null;
     bannedAt?: Date | string | null;
     accessGroups?: Prisma.UserAccessGroupUncheckedCreateNestedManyWithoutUserInput;
+    departmentMemberships?: Prisma.DepartmentMembershipUncheckedCreateNestedManyWithoutUserInput;
 };
 
 export type UserUpdateInput = {
@@ -379,6 +384,7 @@ export type UserUpdateInput = {
     rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
     bannedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
     accessGroups?: Prisma.UserAccessGroupUpdateManyWithoutUserNestedInput;
+    departmentMemberships?: Prisma.DepartmentMembershipUpdateManyWithoutUserNestedInput;
 };
 
 export type UserUncheckedUpdateInput = {
@@ -394,6 +400,7 @@ export type UserUncheckedUpdateInput = {
     rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
     bannedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
     accessGroups?: Prisma.UserAccessGroupUncheckedUpdateManyWithoutUserNestedInput;
+    departmentMemberships?: Prisma.DepartmentMembershipUncheckedUpdateManyWithoutUserNestedInput;
 };
 
 export type UserCreateManyInput = {
@@ -553,6 +560,32 @@ export type UserUpdateOneRequiredWithoutAccessGroupsNestedInput = {
     >;
 };
 
+export type UserCreateNestedOneWithoutDepartmentMembershipsInput = {
+    create?: Prisma.XOR<
+        Prisma.UserCreateWithoutDepartmentMembershipsInput,
+        Prisma.UserUncheckedCreateWithoutDepartmentMembershipsInput
+    >;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutDepartmentMembershipsInput;
+    connect?: Prisma.UserWhereUniqueInput;
+};
+
+export type UserUpdateOneRequiredWithoutDepartmentMembershipsNestedInput = {
+    create?: Prisma.XOR<
+        Prisma.UserCreateWithoutDepartmentMembershipsInput,
+        Prisma.UserUncheckedCreateWithoutDepartmentMembershipsInput
+    >;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutDepartmentMembershipsInput;
+    upsert?: Prisma.UserUpsertWithoutDepartmentMembershipsInput;
+    connect?: Prisma.UserWhereUniqueInput;
+    update?: Prisma.XOR<
+        Prisma.XOR<
+            Prisma.UserUpdateToOneWithWhereWithoutDepartmentMembershipsInput,
+            Prisma.UserUpdateWithoutDepartmentMembershipsInput
+        >,
+        Prisma.UserUncheckedUpdateWithoutDepartmentMembershipsInput
+    >;
+};
+
 export type UserCreateWithoutAccessGroupsInput = {
     id?: string;
     sc_handle: string;
@@ -565,6 +598,7 @@ export type UserCreateWithoutAccessGroupsInput = {
     updatedAt?: Date | string;
     rejectedAt?: Date | string | null;
     bannedAt?: Date | string | null;
+    departmentMemberships?: Prisma.DepartmentMembershipCreateNestedManyWithoutUserInput;
 };
 
 export type UserUncheckedCreateWithoutAccessGroupsInput = {
@@ -579,6 +613,7 @@ export type UserUncheckedCreateWithoutAccessGroupsInput = {
     updatedAt?: Date | string;
     rejectedAt?: Date | string | null;
     bannedAt?: Date | string | null;
+    departmentMemberships?: Prisma.DepartmentMembershipUncheckedCreateNestedManyWithoutUserInput;
 };
 
 export type UserCreateOrConnectWithoutAccessGroupsInput = {
@@ -621,6 +656,7 @@ export type UserUpdateWithoutAccessGroupsInput = {
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
     bannedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    departmentMemberships?: Prisma.DepartmentMembershipUpdateManyWithoutUserNestedInput;
 };
 
 export type UserUncheckedUpdateWithoutAccessGroupsInput = {
@@ -635,6 +671,95 @@ export type UserUncheckedUpdateWithoutAccessGroupsInput = {
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
     bannedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    departmentMemberships?: Prisma.DepartmentMembershipUncheckedUpdateManyWithoutUserNestedInput;
+};
+
+export type UserCreateWithoutDepartmentMembershipsInput = {
+    id?: string;
+    sc_handle: string;
+    password: string;
+    status?: $Enums.UserStatus;
+    role?: $Enums.Role;
+    verification_token: string;
+    failed_attempts?: number;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    rejectedAt?: Date | string | null;
+    bannedAt?: Date | string | null;
+    accessGroups?: Prisma.UserAccessGroupCreateNestedManyWithoutUserInput;
+};
+
+export type UserUncheckedCreateWithoutDepartmentMembershipsInput = {
+    id?: string;
+    sc_handle: string;
+    password: string;
+    status?: $Enums.UserStatus;
+    role?: $Enums.Role;
+    verification_token: string;
+    failed_attempts?: number;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    rejectedAt?: Date | string | null;
+    bannedAt?: Date | string | null;
+    accessGroups?: Prisma.UserAccessGroupUncheckedCreateNestedManyWithoutUserInput;
+};
+
+export type UserCreateOrConnectWithoutDepartmentMembershipsInput = {
+    where: Prisma.UserWhereUniqueInput;
+    create: Prisma.XOR<
+        Prisma.UserCreateWithoutDepartmentMembershipsInput,
+        Prisma.UserUncheckedCreateWithoutDepartmentMembershipsInput
+    >;
+};
+
+export type UserUpsertWithoutDepartmentMembershipsInput = {
+    update: Prisma.XOR<
+        Prisma.UserUpdateWithoutDepartmentMembershipsInput,
+        Prisma.UserUncheckedUpdateWithoutDepartmentMembershipsInput
+    >;
+    create: Prisma.XOR<
+        Prisma.UserCreateWithoutDepartmentMembershipsInput,
+        Prisma.UserUncheckedCreateWithoutDepartmentMembershipsInput
+    >;
+    where?: Prisma.UserWhereInput;
+};
+
+export type UserUpdateToOneWithWhereWithoutDepartmentMembershipsInput = {
+    where?: Prisma.UserWhereInput;
+    data: Prisma.XOR<
+        Prisma.UserUpdateWithoutDepartmentMembershipsInput,
+        Prisma.UserUncheckedUpdateWithoutDepartmentMembershipsInput
+    >;
+};
+
+export type UserUpdateWithoutDepartmentMembershipsInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    sc_handle?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus;
+    role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role;
+    verification_token?: Prisma.StringFieldUpdateOperationsInput | string;
+    failed_attempts?: Prisma.IntFieldUpdateOperationsInput | number;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    bannedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    accessGroups?: Prisma.UserAccessGroupUpdateManyWithoutUserNestedInput;
+};
+
+export type UserUncheckedUpdateWithoutDepartmentMembershipsInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    sc_handle?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus;
+    role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role;
+    verification_token?: Prisma.StringFieldUpdateOperationsInput | string;
+    failed_attempts?: Prisma.IntFieldUpdateOperationsInput | number;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    bannedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    accessGroups?: Prisma.UserAccessGroupUncheckedUpdateManyWithoutUserNestedInput;
 };
 
 /**
@@ -643,12 +768,14 @@ export type UserUncheckedUpdateWithoutAccessGroupsInput = {
 
 export type UserCountOutputType = {
     accessGroups: number;
+    departmentMemberships: number;
 };
 
 export type UserCountOutputTypeSelect<
     ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
 > = {
     accessGroups?: boolean | UserCountOutputTypeCountAccessGroupsArgs;
+    departmentMemberships?: boolean | UserCountOutputTypeCountDepartmentMembershipsArgs;
 };
 
 /**
@@ -672,6 +799,15 @@ export type UserCountOutputTypeCountAccessGroupsArgs<
     where?: Prisma.UserAccessGroupWhereInput;
 };
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountDepartmentMembershipsArgs<
+    ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
+> = {
+    where?: Prisma.DepartmentMembershipWhereInput;
+};
+
 export type UserSelect<
     ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
 > = runtime.Types.Extensions.GetSelect<
@@ -688,6 +824,7 @@ export type UserSelect<
         rejectedAt?: boolean;
         bannedAt?: boolean;
         accessGroups?: boolean | Prisma.User$accessGroupsArgs<ExtArgs>;
+        departmentMemberships?: boolean | Prisma.User$departmentMembershipsArgs<ExtArgs>;
         _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>;
     },
     ExtArgs['result']['user']
@@ -727,6 +864,7 @@ export type UserInclude<
     ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
 > = {
     accessGroups?: boolean | Prisma.User$accessGroupsArgs<ExtArgs>;
+    departmentMemberships?: boolean | Prisma.User$departmentMembershipsArgs<ExtArgs>;
     _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>;
 };
 
@@ -736,6 +874,7 @@ export type $UserPayload<
     name: 'User';
     objects: {
         accessGroups: Prisma.$UserAccessGroupPayload<ExtArgs>[];
+        departmentMemberships: Prisma.$DepartmentMembershipPayload<ExtArgs>[];
     };
     scalars: runtime.Types.Extensions.GetPayloadResult<
         {
@@ -1224,6 +1363,17 @@ export interface Prisma__UserClient<
           >
         | Null
     >;
+    departmentMemberships<T extends Prisma.User$departmentMembershipsArgs<ExtArgs> = {}>(
+        args?: Prisma.Subset<T, Prisma.User$departmentMembershipsArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<
+        | runtime.Types.Result.GetResult<
+              Prisma.$DepartmentMembershipPayload<ExtArgs>,
+              T,
+              'findMany',
+              GlobalOmitOptions
+          >
+        | Null
+    >;
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1662,6 +1812,35 @@ export type User$accessGroupsArgs<
     take?: number;
     skip?: number;
     distinct?: Prisma.UserAccessGroupScalarFieldEnum | Prisma.UserAccessGroupScalarFieldEnum[];
+};
+
+/**
+ * User.departmentMemberships
+ */
+export type User$departmentMembershipsArgs<
+    ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
+> = {
+    /**
+     * Select specific fields to fetch from the DepartmentMembership
+     */
+    select?: Prisma.DepartmentMembershipSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the DepartmentMembership
+     */
+    omit?: Prisma.DepartmentMembershipOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.DepartmentMembershipInclude<ExtArgs> | null;
+    where?: Prisma.DepartmentMembershipWhereInput;
+    orderBy?:
+        | Prisma.DepartmentMembershipOrderByWithRelationInput
+        | Prisma.DepartmentMembershipOrderByWithRelationInput[];
+    cursor?: Prisma.DepartmentMembershipWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?:
+        Prisma.DepartmentMembershipScalarFieldEnum | Prisma.DepartmentMembershipScalarFieldEnum[];
 };
 
 /**

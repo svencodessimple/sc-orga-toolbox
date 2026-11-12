@@ -3,6 +3,7 @@ interface AccessGroupGeneralFieldsProps {
     name: string;
     description: string;
     isPending: boolean;
+    isArchived: boolean;
     onNameChange: (name: string) => void;
     onDescriptionChange: (description: string) => void;
 }
@@ -12,6 +13,7 @@ export function AccessGroupGeneralFields({
     name,
     description,
     isPending,
+    isArchived,
     onNameChange,
     onDescriptionChange,
 }: AccessGroupGeneralFieldsProps) {
@@ -45,7 +47,7 @@ export function AccessGroupGeneralFields({
                         required
                         maxLength={80}
                         value={name}
-                        disabled={isPending}
+                        disabled={isPending || isArchived}
                         onChange={(event) => onNameChange(event.target.value)}
                         className="w-full border border-line bg-panel-alt px-3 py-2 text-sm text-text outline-none transition focus:border-cyan disabled:cursor-not-allowed disabled:opacity-50"
                     />
@@ -61,7 +63,7 @@ export function AccessGroupGeneralFields({
                     rows={3}
                     maxLength={300}
                     value={description}
-                    disabled={isPending}
+                    disabled={isPending || isArchived}
                     onChange={(event) => onDescriptionChange(event.target.value)}
                     className="w-full resize-y border border-line bg-panel-alt px-3 py-2 text-sm leading-6 text-text outline-none transition focus:border-cyan disabled:cursor-not-allowed disabled:opacity-50"
                 />
